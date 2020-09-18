@@ -29,7 +29,7 @@ def challenge(challenge_id):
 
 @blueprint.route("/create_new", methods=["GET", "POST"])
 @login_required
-def create_newr():
+def create_new():
     form = ChallengeForm(request.form)
     if form.validate_on_submit():
         Challenge.create(
