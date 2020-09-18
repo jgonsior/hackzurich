@@ -5,7 +5,7 @@ import sys
 
 from flask import Flask, render_template
 
-from hackzurich import commands, public, user
+from hackzurich import commands, public, user, challenge
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -51,6 +51,7 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(challenge.views.blueprint)
     return None
 
 
