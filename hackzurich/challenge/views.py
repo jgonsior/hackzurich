@@ -22,9 +22,9 @@ blueprint = Blueprint(
 @blueprint.route("/<int:challenge_id>")
 @login_required
 def challenge(challenge_id):
-    print(challenge_id)
+    challenge = Challenge.query.filter_by(id=challenge_id).first()
     """List members."""
-    return render_template("challenges/challenges.html", challenge_id=challenge_id)
+    return render_template("challenges/challenges.html", challenge=challenge)
 
 
 @blueprint.route("/create_new", methods=["GET", "POST"])
