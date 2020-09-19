@@ -1,9 +1,27 @@
 
 {% extends "layout.html" %}
 {% block content %}
-    <div class="container">
-        <h1>Welcome {{ current_user.username }}</h1>
-        <h3>This is the members-only page.</h3>
+<div class="container">
+    <h1>Welcome {{ current_user.username }}</h1>
+    <h2>@todo show user stats</h2>
+    <h3>Please select a challenge for today</h3>
+    <div id="challenge1">
+        <h4>Take cold shower</h4>
+        <p>Lorem ipsum</p>
+        <p><a href="/challenges/1" class="btn btn-primary btn-large">Take this challenge</a></p>
     </div>
+    <div id="challenge1">
+        <h4>Ride your bike</h4>
+        <p>Lorem ipsum</p>
+        <p><a href="/challenges/2" class="btn btn-primary btn-large">Take this challenge</a></p>
+    </div>
+    <div id="challenge1">
+        <h4>Breath mindfully</h4>
+        <p>Lorem ipsum</p>
+        <p><a href="/challenges/3" class="btn btn-primary btn-large">Take this challenge</a></p>
+    </div>
+
+</div>
+
 {% endblock %}
 
