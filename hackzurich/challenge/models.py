@@ -68,8 +68,7 @@ class Challenge(PkModel):
     category_id = Column(db.Integer, db.ForeignKey("category.id"))
     company_id = Column(db.Integer, db.ForeignKey("company.id"))
     co2offset = Column(db.Integer, nullable=False)
-
-    chat_room_id = Column(db.String, db.ForeignKey('chat_rooms.room_id'))
+    chat_room_id = Column(db.String, db.ForeignKey("chat_rooms.room_id"))
 
     def __init__(
         self, challengename, description, active, category_id, co2offset, **kwargs

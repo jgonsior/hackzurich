@@ -29,7 +29,7 @@ from hackzurich.extensions import (
     login_manager,
     migrate,
     admin,
-    socketio
+    socketio,
 )
 
 
@@ -91,7 +91,7 @@ def create_dummy_data():
 
     chat_room = ChatRoom.create(name='Ein schoener Raum', room_id='room1')
     chat_message = ChatMessage.create(user=normal_user, text='Hello!!', room=chat_room)
-
+    
     challenge = Challenge(
         challengename="Challenge 1",
         description="Lorem ipsum",
@@ -174,6 +174,7 @@ def create_dummy_data():
     user_challenge_association12 = User_Challenge_Association(
         normal_user.id,
         challenge1.id,
+        normal_user.id, challenge1.id,
     )
     db.session.add(user_challenge_association12)
 
@@ -195,7 +196,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    register_admin(app)
+    #  register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
@@ -280,6 +281,7 @@ def register_admin(app):
     from hackzurich.user.models import User
     from hackzurich.challenge.models import Challenge, Category, Company, User_Challenge_Association
     from hackzurich.chat.models import ChatMessage, ChatRoom
+
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Challenge, db.session))
     admin.add_view(ModelView(Category, db.session))
@@ -288,7 +290,7 @@ def register_admin(app):
     admin.add_view(ModelView(Company, db.session))
     admin.add_view(ModelView(User_Challenge_Association, db.session))
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
-
+    
 def configure_logger(app):
     """Configure loggers."""
     handler = logging.StreamHandler(sys.stdout)
