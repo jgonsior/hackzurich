@@ -89,12 +89,10 @@ def create_dummy_data():
     db.session.add(company2)
     db.session.flush()
 
-    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="room1")
-    chat_message = ChatMessage.create(user=normal_user2, text="Hello!!", room=chat_room)
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 1")
     chat_message = ChatMessage.create(
-        user=normal_user3, text="Hello from me as well!!", room=chat_room
+        user=admin, text="Welcome to the challenge!", room=chat_room
     )
-
     challenge = Challenge(
         challengename="Challenge 1",
         description="Lorem ipsum",
@@ -106,6 +104,10 @@ def create_dummy_data():
     )
     db.session.add(challenge)
 
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 2")
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
     challenge1 = Challenge(
         challengename="Challenge 2",
         description="Lorem ipsum",
@@ -117,6 +119,10 @@ def create_dummy_data():
     )
     db.session.add(challenge1)
 
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 3")
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
     challenge2 = Challenge(
         challengename="Challenge 3",
         description="Lorem ipsum",
@@ -128,6 +134,10 @@ def create_dummy_data():
     )
     db.session.add(challenge2)
 
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 4")
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
     challenge3 = Challenge(
         challengename="Challenge 4",
         description="Lorem ipsum",
