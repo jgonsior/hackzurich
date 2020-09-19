@@ -15,7 +15,7 @@ from .forms import ChallengeForm
 from .models import Challenge
 
 blueprint = Blueprint(
-    "challenge", __name__, url_prefix="/challenges", static_folder="../static"
+    "challenge_blueprint", __name__, url_prefix="/challenges", static_folder="../static"
 )
 
 
