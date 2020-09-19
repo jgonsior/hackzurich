@@ -63,11 +63,25 @@ def challenge(challenge_id):
 
         streak = [s for s in streak if s.done_at > cut_off_date]
 
+    total_co2offset = (
+        User_Challenge_Association.query.filter_by(challenge_id=challenge.id).count()
+        * challenge.co2offset
+    )
+
+    co2offset_by_you = (
+        User_Challenge_Association.query.filter_by(
+            challenge_id=challenge.id, user_id=current_user.id
+        ).count()
+        * challenge.co2offset
+    )
+
     return render_template(
         "challenges/challenges.html",
         challenge=challenge,
         user_challenge_association=user_challenge_association,
         streak=streak,
+        total_co2offset=total_co2offset,
+        co2offset_by_you=co2offset_by_you,
     )
 
 

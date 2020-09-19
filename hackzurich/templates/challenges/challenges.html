@@ -2,12 +2,14 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container">
-    <h1>{{ user_challenge_association }} </h1>
     <h1>Challenge #{{ challenge.id }}</h1>
     <h3>{{ challenge.challengename }}</h3>
     <p>{{ challenge.description }}</p>
+    <p>Saving potential: {{ challenge.co2offset }}kg/co2</p>
+    <p>Saved CO2 by all participants in this challenge: {{ total_co2offset }}kg/co2</p>
+    <p>Saved CO2 by you: {{ co2offset_by_you }}kg/co2</p>
     {% if user_challenge_association != None %}
-    {% if user_challenge_association.succeeded == 1 %}
+    {% if user_challenge_association.succeeded == 0 %}
     <p>Committed to this challenge since {{ user_challenge_association.commited_to_at | datetime}}</p>
     {% else %}
     <p>Challenge cancelled at {{ user_challenge_association.done_at }}</p>

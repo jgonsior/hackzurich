@@ -14,6 +14,18 @@ blueprint = Blueprint(
 def members():
     """List members."""
     active_challenges = Challenge.query.filter_by(active=True).all()
+    done_user_challenges = User_Challenge_Association.query.filter_by(
+        user_id=current_user.id, succeeded=True
+    ).all()
+
+    done_challenges = []
+    total_saved_co2 = 0
+    for done_user_challenge in done_user_challenges:
+        done_user_challenge.challenge = Challenge.query.filter_by(
+            id=done_user_challenge.challenge_id
+        ).first()
+        done_challenges.append(done_user_challenge)
+        total_saved_co2 += done_user_challenge.challenge.co2offset
 
     for active_challenge in active_challenges:
         user_challenge_association = (
@@ -24,6 +36,10 @@ def members():
             .first()
         )
         active_challenge.user_challenge_association = user_challenge_association
-        active_challenge.test = "hallo"
 
-    return render_template("users/members.html", active_challenges=active_challenges)
+    return render_template(
+        "users/members.html",
+        active_challenges=active_challenges,
+        done_challenges=done_challenges,
+        total_saved_co2=total_saved_co2,
+    )

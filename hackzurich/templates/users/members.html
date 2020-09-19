@@ -3,7 +3,13 @@
 {% block content %}
 <div class="container">
     <h1>Welcome {{ current_user.username }}</h1>
-    <h2>@todo show user stats</h2>
+    <h2>Done challenges by user</h2>
+    <ul>
+    {% for done_challenge in done_challenges %}
+    <li>{{ done_challenge.done_at | datetime }} - {{ done_challenge.challenge.challengename }}: {{ done_challenge.challenge.co2offset }}</li>
+    {% endfor %}
+    <li><b>Total saved CO2: {{ total_saved_co2 }} </b></li>
+    </ul>
     <h3>Please select a challenge for today</h3>
 
     {% for challenge in active_challenges %}
@@ -21,6 +27,7 @@
                 {% endif %}
             {% endif %}
         </h4>
+        <i>Saving potential: {{ challenge.co2offset }}kg/co2</i>
         <p>{{ challenge.description }}</p>
         <p><a href="/challenges/{{ challenge.id }}" class="btn btn-primary btn-large">Details</a></p>
     </div>

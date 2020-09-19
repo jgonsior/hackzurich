@@ -51,14 +51,18 @@ class Challenge(PkModel):
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     active = Column(db.Boolean(), default=False)
     category_id = Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
+    co2offset = Column(db.Integer, nullable=False)
 
-    def __init__(self, challengename, description, active, category_id, **kwargs):
+    def __init__(
+        self, challengename, description, active, category_id, co2offset, **kwargs
+    ):
         """Create instance."""
         super().__init__(
             challengename=challengename,
             description=description,
             active=active,
             category_id=category_id,
+            co2offset=co2offset,
             **kwargs,
         )
 

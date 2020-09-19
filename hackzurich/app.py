@@ -31,12 +31,17 @@ def create_dummy_data():
         email="admin@example.org",
         password="testtest",
         active=True,
+        country="Kenia",
         is_admin=True,
     )
     db.session.add(admin)
 
     normal_user = User(
-        username="testuser", email="test@example.org", password="testtest", active=True,
+        username="testuser",
+        email="test@example.org",
+        password="testtest",
+        active=True,
+        country="Switzerland",
     )
     db.session.add(normal_user)
 
@@ -45,6 +50,7 @@ def create_dummy_data():
         email="test2@example.org",
         password="testtest",
         active=True,
+        country="USA",
     )
     db.session.add(normal_user2)
 
@@ -53,6 +59,7 @@ def create_dummy_data():
         email="test3@example.org",
         password="testtest",
         active=True,
+        country="Lebanon",
     )
     db.session.add(normal_user3)
 
@@ -70,6 +77,7 @@ def create_dummy_data():
         description="Lorem ipsum",
         active=True,
         category_id=category1.id,
+        co2offset=1000,
     )
     db.session.add(challenge)
 
@@ -77,6 +85,7 @@ def create_dummy_data():
         challengename="Challenge 2",
         description="Lorem ipsum",
         active=True,
+        co2offset=100,
         category_id=category1.id,
     )
     db.session.add(challenge1)
@@ -85,6 +94,7 @@ def create_dummy_data():
         challengename="Challenge 3",
         description="Lorem ipsum",
         active=False,
+        co2offset=500,
         category_id=category1.id,
     )
     db.session.add(challenge2)
@@ -93,6 +103,7 @@ def create_dummy_data():
         challengename="Challenge 4",
         description="Lorem ipsum",
         active=True,
+        co2offset=30,
         category_id=category2.id,
     )
     db.session.add(challenge3)
@@ -109,6 +120,7 @@ def create_dummy_data():
         challenge1.id,
         succeeded=True,
         done_at=dt.datetime.now() - timedelta(days=13),
+        commited_to_at=dt.datetime.now() - timedelta(days=13, hours=1),
     )
     db.session.add(user_challenge_association12)
 
@@ -117,59 +129,23 @@ def create_dummy_data():
         challenge1.id,
         succeeded=True,
         done_at=dt.datetime.now() - timedelta(days=12),
+        commited_to_at=dt.datetime.now() - timedelta(days=12, hours=1),
     )
     db.session.add(user_challenge_association12)
+
+    for i in range(1, 8):
+        user_challenge_association12 = User_Challenge_Association(
+            normal_user.id,
+            challenge1.id,
+            succeeded=True,
+            done_at=dt.datetime.now() - timedelta(days=i),
+            commited_to_at=dt.datetime.now() - timedelta(days=i, hours=1),
+        )
+        db.session.add(user_challenge_association12)
 
     user_challenge_association12 = User_Challenge_Association(
         normal_user.id,
         challenge1.id,
-        succeeded=False,
-        done_at=dt.datetime.now() - timedelta(days=6),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
-        succeeded=True,
-        done_at=dt.datetime.now() - timedelta(days=5),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
-        succeeded=True,
-        done_at=dt.datetime.now() - timedelta(days=4),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
-        succeeded=True,
-        done_at=dt.datetime.now() - timedelta(days=3),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
-        succeeded=True,
-        done_at=dt.datetime.now() - timedelta(days=2),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
-        succeeded=True,
-        done_at=dt.datetime.now() - timedelta(days=1),
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id, challenge1.id,
     )
     db.session.add(user_challenge_association12)
 
