@@ -29,9 +29,14 @@ blueprint = Blueprint(
 def challenge(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
 
-    user_challenge_association = User_Challenge_Association.query.filter_by(
-        user_id=current_user.id, challenge_id=challenge.id, done_at=None
-    ).first()
+    user_challenge_association = (
+        User_Challenge_Association.query.filter_by(
+            user_id=current_user.id, challenge_id=challenge.id
+        )
+        .filter(User_Challenge_Association.done_at.is_(None))
+        .order_by(User_Challenge_Association.commited_to_at.desc())
+        .first()
+    )
 
     streak = (
         User_Challenge_Association.query.filter_by(
@@ -99,7 +104,12 @@ def mark_failed(challenge_id):
     user_challenge_association.succeeded = False
     db.session.commit()
 
-    flash("You've aborted challenge " + str(challenge.challengename))
+    flash(
+        "You've aborted challenge "
+        + str(challenge.challengename)
+        + " "
+        + str(user_challenge_association.id)
+    )
 
     return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))
 

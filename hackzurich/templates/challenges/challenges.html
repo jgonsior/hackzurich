@@ -2,28 +2,26 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container">
+    <h1>{{ user_challenge_association }} </h1>
     <h1>Challenge #{{ challenge.id }}</h1>
     <h3>{{ challenge.challengename }}</h3>
     <p>{{ challenge.description }}</p>
+    {% if user_challenge_association != None %}
+    {% if user_challenge_association.succeeded == 1 %}
+    <p>Committed to this challenge since {{ user_challenge_association.commited_to_at | datetime}}</p>
+    {% else %}
+    <p>Challenge cancelled at {{ user_challenge_association.done_at }}</p>
+    {% endif %}
+    {% endif %}
 
     <ul class="timeline">
         {% for streak_association in streak %}
         <li>
-            <i>#{{ streak_association.id }}</i>
-            {{ streak_association.commited_to_at | datetime }}
             {{ streak_association.done_at | datetime }}
-            {{ streak_association.succeeded}}
         </li>
         {% endfor %}
     </ul>
 
-    {% if user_challenge_association != None %}
-    {% if user_challenge_association.succeeded == 1 %}
-    <p>Challenge last done at {{ user_challenge_association.done_at }}</p>
-    {% else %}
-    <p>Committed to this challenge since {{ user_challenge_association.commited_to_at }}</p>
-    {% endif %}
-    {% endif %}
 
 
     <p><a href="{{ url_for('challenge_blueprint.mark_done', challenge_id=challenge.id) }}" class="btn btn-primary btn-large

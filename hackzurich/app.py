@@ -36,10 +36,7 @@ def create_dummy_data():
     db.session.add(admin)
 
     normal_user = User(
-        username="testuser",
-        email="test@example.org",
-        password="testtest",
-        active=True,
+        username="testuser", email="test@example.org", password="testtest", active=True,
     )
     db.session.add(normal_user)
 
@@ -172,8 +169,7 @@ def create_dummy_data():
     db.session.add(user_challenge_association12)
 
     user_challenge_association12 = User_Challenge_Association(
-        normal_user.id,
-        challenge1.id,
+        normal_user.id, challenge1.id,
     )
     db.session.add(user_challenge_association12)
 
@@ -204,6 +200,7 @@ def create_app(config_object="hackzurich.settings"):
     configure_logger(app)
 
     with app.app_context():
+
         if not User.query.count():
             app.logger.info("Creating dummy db data")
             create_dummy_data()
