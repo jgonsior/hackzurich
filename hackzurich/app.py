@@ -186,7 +186,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    #  register_admin(app)
+    register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)

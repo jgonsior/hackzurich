@@ -11,6 +11,7 @@
     <meta charset="utf-8" />
 
     <link rel="shortcut icon" href="{{static_url_for('static', filename='build/img/favicon.png') }}" type="image/png" />
+
     <title>
       {% block page_title %}
       hackzurich
@@ -30,6 +31,8 @@
       type="text/css"
       href="{{ static_url_for('static', filename='build/main_css.bundle.css') }}"
     />
+
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
     {% block css %}{% endblock %}
 

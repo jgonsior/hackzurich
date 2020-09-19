@@ -277,8 +277,8 @@ ul.timeline > li:before {
 
 /* abdullah styles */
 * {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 300;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
 }
 * {
     box-sizing: border-box;
@@ -474,16 +474,16 @@ ul.timeline > li:before {
 }
 .profile-panel .dailyChallenge .challenge:hover .order p,
 .profile-panel .oldChallenge .challenge:hover .order p{
-    background-color: #8ee064;
+    background-color: linear-gradient(180deg, rgba(255,255,225,1) 0%, rgba(142,224,100,1) 74%);
 }
 .profile-panel .dailyChallenge .challenge:hover .inner .p,
 .profile-panel .oldChallenge .challenge:hover .inner .p{
-    color: #8ee064;
+    color: linear-gradient(180deg, rgba(255,255,225,1) 0%, rgba(142,224,100,1) 74%);
     font-weight: bold;
 }
 .profile-panel .dailyChallenge .challenge .order .active,
 .profile-panel .oldChallenge .challenge .order .active{
-    background-color: #8ee064;
+    background-color: linear-gradient(180deg, rgba(255,255,225,1) 0%, rgba(142,224,100,1) 74%);
 }
 .profile-panel .dailyChallenge .challenge .order p,
 .profile-panel .oldChallenge .challenge .order p{
@@ -509,7 +509,7 @@ ul.timeline > li:before {
 .profile-panel .oldChallenge .challenge .inner:hover{
     color: #fff;
     border: 1px solid #8ee064;
-    background-color: #8ee064;
+    background-color: linear-gradient(180deg, rgba(255,255,225,1) 0%, rgba(142,224,100,1) 74%);
     transition: ease-in-out all 0.6s;
 }
 .profile-panel .dailyChallenge .challenge .inner .P,
