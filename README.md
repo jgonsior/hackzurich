@@ -1,6 +1,15 @@
-# hackzurich
+# Join IN
 
-A flasky app.
+Join In is a social challenge developed in 35h for //ackZurich 2020.
+Pick a sustainablility challenge every day, and get motivated by chatting with other people performing the challenge. Also keep track of your climate impact, achieved through the challenge.
+
+Team:
+Isabelle Pumford
+Abdullah Hussein 
+Joachim Schaeffer
+Julius Gonsior
+Oliver Dressler
+
 
 ## Docker Quickstart
 
