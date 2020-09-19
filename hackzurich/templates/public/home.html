@@ -1,35 +1,111 @@
 
 {% extends "layout.html" %}
 {% block content %}
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-    <div class="container">
-    
-      <h1 class="display-3">Welcome to making the world a better place</h1>
-    
-      <p>This is a starter Flask template. It includes Bootstrap 4, jQuery 3, Flask-SQLAlchemy, WTForms, and various testing utilities out of the box.</p>
-      <p><a href="https://github.com/cookiecutter-flask/cookiecutter-flask" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-    </div>
-</div><!-- /.jumbotron -->
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-4">
-      <h2><i class="fa fa-code"></i> Bootstrap 4</h2>
-      <p>Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</p>
-      <p><a class="btn btn-outline-secondary" href="http://getbootstrap.com/">Official website &raquo;</a></p>
+
+<div class="landpage" style="background-image: url({{static_url_for('static', filename='build/img/landing_page1.jpg') }});background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 80vh;
+    position: relative;">
+    <div class="overlay" style="text-align: center;padding-top: 200px;color: #fff">
+        <h1>Multiply your climate action.</h1><br>
+        <div class="btn btn-success"><b>Join In</b></div>
     </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-flask"></i> SQLAlchemy</h2>
-      <p>SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL.</p>
-      <p><a href="http://www.sqlalchemy.org/" class="btn btn-outline-secondary">Official website &raquo;</a></p>
-   </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-edit"></i> WTForms</h2>
-      <p>WTForms is a flexible forms validation and rendering library for python web development.</p>
-      <p><a href="http://wtforms.simplecodes.com/" class="btn btn-outline-secondary">Official website &raquo;</a></p>
-    </div>
-  </div><!-- /.row -->
 </div>
+
+<!-- start our team part -->
+<div class="our-team">
+    <div class="cotainer">
+        <center style="padding: 30px">
+        <h3>Meet our team</h3>
+      </center>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">
+                <div><img class="img" src="{{static_url_for('static', filename='build/img/1.png') }}" alt=""></div>
+                <div class="prag">
+                    <div class="h6">Joachim
+                    </div>
+                </div>
+                <div class="sociallinks">
+                  <div class="sociallinks">
+                    <ul class="socialFooter clearfix">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div><img class="img" src="{{static_url_for('static', filename='build/img/4.png') }}" alt=""></div>
+                <div class="prag">
+                    <div class="h6">Abdullah
+                    </div>
+                </div>
+                <div class="sociallinks"><div class="sociallinks">
+                    <ul class="socialFooter clearfix">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div></div>
+            </div>
+            <div class="col-md-2">
+                <div><img class="img" src="{{static_url_for('static', filename='build/img/2.png') }}" alt=""></div>
+                <div class="prag">
+                    <div class="h6">Julius
+                    </div>
+                </div>
+                <div class="sociallinks"><div class="sociallinks">
+                    <ul class="socialFooter clearfix">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div></div>
+            </div>
+            <div class="col-md-2">
+                <div><img class="img" src="{{static_url_for('static', filename='build/img/3.png') }}" alt=""></div>
+                <div class="prag">
+                    <div class="h6">Oliver
+                    </div>
+                </div>
+                <div class="sociallinks"><div class="sociallinks">
+                    <ul class="socialFooter clearfix">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div></div>
+            </div>
+            <div class="col-md-2">
+                <div><img class="img" src="{{static_url_for('static', filename='build/img/4.png') }}" alt=""></div>
+                <div class="prag">
+                    <div class="h6">Isabelle
+                    </div>
+                </div>
+                <div class="sociallinks"><div class="sociallinks">
+                    <ul class="socialFooter clearfix">
+                        <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                        <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                    </ul>
+                </div></div>
+            </div>
+
+            <div class="col-md-1"></div>
+
+        </div>
+    </div>
+</div>
+<!-- end our team part -->
+
 {% endblock %}
 

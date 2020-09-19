@@ -598,3 +598,47 @@ ul.timeline > li:before {
   border: none;
 }
 /* end styling the pop up details */
+
+.our-team h3 {
+    margin-top: 20px;
+    text-align: center;
+}
+.our-team .row {
+    margin: 0;
+}
+.our-team .row > div {
+    margin-bottom: 60px;
+    text-align: center;
+    display: block;
+}
+.our-team .row > div .img {
+    height: 120px;
+    width: 120px;
+    border-radius: 50%;
+    background-color: #bfc5ca;
+    margin: auto;
+    margin-top: 10px;
+}
+.our-team .row > div .prag {
+    color: #333333;
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+}
+.our-team .row .socialFooter {
+    margin: auto;
+    width: 172px;
+    display: flex;
+    margin-bottom: 20px;
+}
+.our-team ul li {
+    float: right;
+    overflow: hidden;
+    padding: 5px;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.clearfix {
+  padding-left: 27px;
+}
