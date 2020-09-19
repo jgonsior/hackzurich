@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Challenge views."""
+import datetime as dt
 from hackzurich.utils import flash_errors
 from flask import (
     Blueprint,
@@ -12,7 +13,8 @@ from flask import (
 )
 from flask_login import login_required, current_user
 from .forms import ChallengeForm
-from .models import Challenge
+from .models import Challenge, User_Challenge_Association
+from hackzurich.database import db
 
 blueprint = Blueprint(
     "challenge_blueprint", __name__, url_prefix="/challenges", static_folder="../static"
@@ -23,7 +25,16 @@ blueprint = Blueprint(
 @login_required
 def challenge(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
-    return render_template("challenges/challenges.html", challenge=challenge)
+
+    user_challenge_association = User_Challenge_Association.query.filter_by(
+        user_id=current_user.id, challenge_id=challenge.id
+    ).first()
+
+    return render_template(
+        "challenges/challenges.html",
+        challenge=challenge,
+        user_challenge_association=user_challenge_association,
+    )
 
 
 @blueprint.route("/create_new/", methods=["GET", "POST"])
@@ -47,7 +58,20 @@ def create_new():
 @login_required
 def mark_done(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
-    return render_template("challenges/challenges.html", challenge=challenge)
+
+    user_challenge_association = (
+        User_Challenge_Association.query.filter_by(
+            user_id=current_user.id, challenge_id=challenge.id
+        )
+        .order_by(User_Challenge_Association.commited_to_at.desc())
+        .first()
+    )
+    user_challenge_association.succeeded_at = dt.datetime.now()
+    db.session.commit()
+
+    flash("You've successfully done challenge " + str(challenge.challengename))
+
+    return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))
 
 
 @blueprint.route("/commit/<int:challenge_id>")
@@ -55,5 +79,10 @@ def mark_done(challenge_id):
 def commit(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
     user = current_user
-    print(user)
-    return render_template("challenges/challenges.html", challenge=challenge)
+
+    user_challenge_association = User_Challenge_Association.create(
+        user_id=user.id, challenge_id=challenge.id
+    )
+    flash("You've successfully commited to challenge " + str(challenge.challengename))
+
+    return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))
