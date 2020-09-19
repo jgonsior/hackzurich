@@ -16,8 +16,10 @@ from flask import (
 from flask_login import login_required, current_user
 from .forms import ChallengeForm
 from .models import Challenge, User_Challenge_Association, Company
+from hackzurich.user.models import User
 from hackzurich.database import db
 import babel
+from hackzurich.chat.models import ChatRoom, ChatMessage
 
 
 blueprint = Blueprint(
@@ -34,10 +36,9 @@ def challenge(challenge_id):
 
     user_challenge_association = (
         User_Challenge_Association.query.filter_by(
-            user_id=current_user.id, challenge_id=challenge.id
+            user_id=current_user.id, challenge_id=challenge.id, done_at=None
         )
-        .filter(User_Challenge_Association.done_at.is_(None))
-        .order_by(User_Challenge_Association.commited_to_at.desc())
+        .order_by(User_Challenge_Association.commited_to_at.asc())
         .first()
     )
 
@@ -52,15 +53,23 @@ def challenge(challenge_id):
     if len(streak) > 1:
         # cut off streak
         cut_off_date = datetime(*streak[0].done_at.timetuple()[:3])
-        for user_challenge_association in streak[1:]:
+        for user_challenge_association_streak in streak[1:]:
             if (
-                datetime(*user_challenge_association.done_at.timetuple()[:3])
+                datetime(*user_challenge_association_streak.done_at.timetuple()[:3])
                 + timedelta(days=1)
                 == cut_off_date
             ):
                 cut_off_date = datetime(
-                    *user_challenge_association.done_at.timetuple()[:3]
+                    *user_challenge_association_streak.done_at.timetuple()[:3]
                 )
+            elif (
+                datetime(*user_challenge_association_streak.done_at.timetuple()[:3])
+                == cut_off_date
+            ):
+                cut_off_date = datetime(
+                    *user_challenge_association_streak.done_at.timetuple()[:3]
+                )
+
             else:
                 break
 
@@ -154,7 +163,39 @@ def mark_done(challenge_id):
     user_challenge_association.succeeded = True
     db.session.commit()
 
-    flash("You've successfully done challenge " + str(challenge.challengename))
+    # notify chat about success
+    admin = User.query.filter_by(id=1).first()
+    chat_room = ChatRoom.query.filter_by(room_id=challenge.challengename).first()
+    chat_message = ChatMessage.create(
+        user=admin,
+        text="Congrats! "
+        + current_user.username
+        + " has successfully solved this challenge!",
+        room=chat_room,
+    )
+    #  datetime(*user_challenge_association_streak.done_at.timetuple()[:3])
+    # check if it has been done five times today
+    count_challenges_solved_today = (
+        User_Challenge_Association.query.filter_by(challenge_id=challenge.id)
+        .filter(
+            User_Challenge_Association.commited_to_at
+            >= datetime(*datetime.now().timetuple()[:3])
+        )
+        .filter(User_Challenge_Association.done_at != None)
+        .count()
+    )
+
+    if count_challenges_solved_today == 5:
+        company = Company.query.filter_by(id=challenge.company_id).first()
+        chat_message = ChatMessage.create(
+            user=admin,
+            text="It has been solved "
+            + str(count_challenges_solved_today)
+            + " times so far! That means "
+            + str(company.name)
+            + " is doubling the amount of saved CO2 by this challenge for today!",
+            room=chat_room,
+        )
 
     return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))
 
@@ -168,6 +209,14 @@ def commit(challenge_id):
     user_challenge_association = User_Challenge_Association.create(
         user_id=user.id, challenge_id=challenge.id
     )
-    flash("You've successfully commited to challenge " + str(challenge.challengename))
+
+    # notify chat about success
+    admin = User.query.filter_by(id=1).first()
+    chat_room = ChatRoom.query.filter_by(room_id=challenge.challengename).first()
+    chat_message = ChatMessage.create(
+        user=admin,
+        text=current_user.username + " has committed to this challenge. Good luck!",
+        room=chat_room,
+    )
 
     return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))

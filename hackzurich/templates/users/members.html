@@ -103,7 +103,7 @@
             <div class="progress">
                 <div class="progress-bar" role="progressbar" style="width: {{ total_saved_co2/country_total_co2*100}}%"
                                                              aria-valuenow="{{total_saved_co2 }}" aria-valuemin="0" aria-valuemax="{{ country_total_co2 }}"></div>
-                <p>{{ total_saved_co2 }} / {{ country_total_co2 }} </p>
+                <p>{{ total_saved_co2 | round(2,'floor') }} / {{ country_total_co2 | round(2, 'floor') }} </p>
             </div>
             <!-- user useful links -->
             <ul class="list-unstyled user-links">
@@ -137,7 +137,7 @@
                         <div class="col-xl-4 col-md-4 col-sm-12 food">
                             <div class="challenge">
                                 <div class="order">
-                                    <p class="active">F</p>
+                                    <p class="active">{{ challenge.category.name | first}}</p>
                                 </div>
                                 <div class="inner">
                                     <p class="p">{{ challenge.challengename }}
@@ -155,7 +155,8 @@
                                     </p>
                                     <p class="span">
                                         Saving potential: {{ challenge.co2offset }}kg/co2
-                                        Number of participants: 102
+
+                                        Number of participants: {{ challenge.total_participants }}
                                     </p>
                                     <a id="detail" href="/challenges/{{ challenge.id }}" class="btn btn-primary btn-large">Details</a>
                                 </div>
