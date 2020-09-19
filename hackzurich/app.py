@@ -8,7 +8,7 @@ from flask_admin.contrib.sqla import ModelView
 
 from hackzurich import commands, public, user, challenge
 from hackzurich.user.models import User
-from hackzurich.challenge.models import Challenge, Category
+from hackzurich.challenge.models import Challenge, Category, User_Challenge_Association
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -41,6 +41,22 @@ def create_dummy_data():
     )
     db.session.add(normal_user)
 
+    normal_user2 = User(
+        username="testuser2",
+        email="test2@example.org",
+        password="testtest",
+        active=True,
+    )
+    db.session.add(normal_user2)
+
+    normal_user3 = User(
+        username="testuser3",
+        email="test3@example.org",
+        password="testtest",
+        active=True,
+    )
+    db.session.add(normal_user3)
+
     category1 = Category(name="Cat 1", parent_id=None)
     id1 = db.session.add(category1)
     db.session.flush()
@@ -58,29 +74,51 @@ def create_dummy_data():
     )
     db.session.add(challenge)
 
-    challenge = Challenge(
+    challenge1 = Challenge(
         challengename="Challenge 2",
         description="Lorem ipsum",
         active=True,
         category_id=category1.id,
     )
-    db.session.add(challenge)
+    db.session.add(challenge1)
 
-    challenge = Challenge(
+    challenge2 = Challenge(
         challengename="Challenge 3",
         description="Lorem ipsum",
         active=False,
         category_id=category1.id,
     )
-    db.session.add(challenge)
+    db.session.add(challenge2)
 
-    challenge = Challenge(
+    challenge3 = Challenge(
         challengename="Challenge 4",
         description="Lorem ipsum",
         active=True,
         category_id=category2.id,
     )
-    db.session.add(challenge)
+    db.session.add(challenge3)
+
+    db.session.flush()
+
+    user_challenge_association11 = User_Challenge_Association(
+        normal_user.id, challenge1.id
+    )
+    db.session.add(user_challenge_association11)
+
+    user_challenge_association22 = User_Challenge_Association(
+        normal_user2.id, challenge2.id
+    )
+    db.session.add(user_challenge_association22)
+
+    user_challenge_association31 = User_Challenge_Association(
+        normal_user3.id, challenge1.id
+    )
+    db.session.add(user_challenge_association31)
+
+    user_challenge_association32 = User_Challenge_Association(
+        normal_user3.id, challenge2.id
+    )
+    db.session.add(user_challenge_association32)
 
 
 def create_app(config_object="hackzurich.settings"):
@@ -90,7 +128,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    register_admin(app)
+    #  register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
