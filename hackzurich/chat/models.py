@@ -23,9 +23,9 @@ class ChatRoom(PkModel):
     name = Column(db.String(80), unique=False, nullable=True)
     challenges = relationship("Challenge", backref="chat_room")
 
-    def __init__(self, room_id, **kwargs):
+    def __init__(self, **kwargs):
         """Create instance."""
-        super().__init__(room_id=room_id, name=room_id **kwargs)
+        super().__init__(**kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
@@ -55,9 +55,7 @@ class ChatMessage(PkModel):
 
     def __init__(self, **kwargs):
         """Create instance."""
-        super().__init__(
-            **kwargs
-        )
+        super().__init__(**kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""

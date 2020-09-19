@@ -18,6 +18,7 @@ class Company(PkModel):
 
     name = Column(db.String(80), unique=True, nullable=False)
     description = Column(db.String(500), nullable=True)
+    challenges = relationship("Challenge", backref="company")
 
     def __init__(self, name, description, **kwargs):
         """Create instance."""
@@ -32,6 +33,8 @@ class User_Challenge_Association(PkModel):
     commited_to_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     done_at = Column(db.DateTime, nullable=True)
     succeeded = Column(db.Boolean, nullable=False, default=False)
+    challenges = relationship("Challenge", backref="user_challenges")
+    users = relationship("User", backref="user_challenges")
 
     def __init__(self, user_id, challenge_id, **kwargs):
         super().__init__(user_id=user_id, challenge_id=challenge_id, **kwargs)
@@ -43,6 +46,7 @@ class Category(PkModel):
     __tablename__ = "category"
     name = Column(db.String(80), unique=True, nullable=False)
     parent_id = Column(db.Integer, db.ForeignKey("category.id"), nullable=True)
+    challenges = relationship("Challenge", backref="category")
 
     def __init__(self, name, parent_id, **kwargs):
         """Create instance."""
@@ -61,10 +65,9 @@ class Challenge(PkModel):
     description = Column(db.String(3000), nullable=False)
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     active = Column(db.Boolean(), default=False)
-    category_id = Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
-    company_id = Column(db.Integer, db.ForeignKey("company.id"), nullable=False)
+    category_id = Column(db.Integer, db.ForeignKey("category.id"))
+    company_id = Column(db.Integer, db.ForeignKey("company.id"))
     co2offset = Column(db.Integer, nullable=False)
-
     chat_room_id = Column(db.String, db.ForeignKey("chat_rooms.room_id"))
 
     def __init__(

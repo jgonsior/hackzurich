@@ -62,6 +62,7 @@ def register():
             email=form.email.data,
             password=form.password.data,
             active=True,
+            country=form.country.data
         )
         flash("Thank you for registering. You can now log in.", "success")
         return redirect(url_for("public_blueprint.home"))
