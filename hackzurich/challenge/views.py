@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Challenge views."""
+from datetime import datetime, timedelta
 import datetime as dt
 from hackzurich.utils import flash_errors
 from flask import (
@@ -15,6 +16,8 @@ from flask_login import login_required, current_user
 from .forms import ChallengeForm
 from .models import Challenge, User_Challenge_Association
 from hackzurich.database import db
+import babel
+
 
 blueprint = Blueprint(
     "challenge_blueprint", __name__, url_prefix="/challenges", static_folder="../static"
@@ -30,10 +33,29 @@ def challenge(challenge_id):
         user_id=current_user.id, challenge_id=challenge.id, done_at=None
     ).first()
 
+    streak = User_Challenge_Association.query.filter_by(
+        user_id=current_user.id, challenge_id=challenge.id, succeeded=True
+    ).order_by(User_Challenge_Association.commited_to_at.desc())
+
+    # cut off streak
+    cut_off_date = datetime(*streak[0].done_at.timetuple()[:3])
+    for user_challenge_association in streak[1:]:
+        if (
+            datetime(*user_challenge_association.done_at.timetuple()[:3])
+            + timedelta(days=1)
+            == cut_off_date
+        ):
+            cut_off_date = datetime(*user_challenge_association.done_at.timetuple()[:3])
+        else:
+            break
+
+    streak = [s for s in streak if s.done_at > cut_off_date]
+
     return render_template(
         "challenges/challenges.html",
         challenge=challenge,
         user_challenge_association=user_challenge_association,
+        streak=streak,
     )
 
 

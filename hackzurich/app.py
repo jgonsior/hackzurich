@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
+import babel
 import logging
 import sys
 import datetime as dt
+from datetime import timedelta
 from flask import Flask, render_template
 from flask_admin.contrib.sqla import ModelView
 
@@ -106,17 +108,32 @@ def create_dummy_data():
     db.session.add(user_challenge_association11)
 
     user_challenge_association12 = User_Challenge_Association(
-        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=13),
     )
     db.session.add(user_challenge_association12)
 
     user_challenge_association12 = User_Challenge_Association(
-        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=2),
     )
     db.session.add(user_challenge_association12)
 
     user_challenge_association12 = User_Challenge_Association(
-        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=1),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
     )
     db.session.add(user_challenge_association12)
 
@@ -151,6 +168,14 @@ def create_app(config_object="hackzurich.settings"):
             app.logger.info("Creating dummy db data")
             create_dummy_data()
             db.session.commit()
+
+        @app.template_filter("datetime")
+        def format_datetime(value, format="medium"):
+            if format == "full":
+                format = "EEEE, d. MMMM y 'at' HH:mm"
+            elif format == "medium":
+                format = "EE dd.MM.y HH:mm"
+            return babel.dates.format_datetime(value, format)
 
     return app
 

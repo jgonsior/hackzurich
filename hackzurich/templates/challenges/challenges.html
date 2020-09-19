@@ -5,12 +5,24 @@
     <h1>Challenge #{{ challenge.id }}</h1>
     <h3>{{ challenge.challengename }}</h3>
     <p>{{ challenge.description }}</p>
+
+    <ul>
+        {% for streak_association in streak %}
+        <li>
+            <i>#{{ streak_association.id }}</i>
+            {{ streak_association.commited_to_at | datetime }}
+            {{ streak_association.done_at | datetime }}
+            {{ streak_association.succeeded}}
+        </li>
+        {% endfor %}
+    </ul>
+
     {% if user_challenge_association != None %}
-        {% if user_challenge_association.succeeded %}
-        <p>Challenge last done at {{ user_challenge_association.commited_to_at }}</p>
-        {% else %}
-        <p>Committed to this challenge since {{ user_challenge_association.commited_to_at }}</p>
-        {% endif %}
+    {% if user_challenge_association.succeeded == 1 %}
+    <p>Challenge last done at {{ user_challenge_association.done_at }}</p>
+    {% else %}
+    <p>Committed to this challenge since {{ user_challenge_association.commited_to_at }}</p>
+    {% endif %}
     {% endif %}
 
 
@@ -28,7 +40,7 @@
     {% if user_challenge_association != None %}
     disabled
     {% endif %}
-            ">Commit to this challenge</a></p>
+    ">Commit to this challenge</a></p>
     <p><a href="/users/" class="btn btn-primary btn-large">Go back to challenge overview</a></p>
 </div>
 
