@@ -119,6 +119,46 @@ def create_dummy_data():
         normal_user.id,
         challenge1.id,
         succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=12),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
+        succeeded=False,
+        done_at=dt.datetime.now() - timedelta(days=6),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=5),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=4),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=3),
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
         done_at=dt.datetime.now() - timedelta(days=2),
     )
     db.session.add(user_challenge_association12)
