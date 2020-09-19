@@ -1,0 +1,57 @@
+
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="row" style="margin-bottom: 100px;background: linear-gradient(0deg, rgba(180,232,154,1) 0%, rgba(248,249,250,1) 63%);">
+    <div class="col-lg-2">
+    </div>
+    <div class="col-lg-4 col-m-6">
+        <div class="row" style="margin-top: 50px">
+            <div class="col-2">
+                <img src="{{static_url_for('static', filename='build/img/profileimg.jpg') }}" style="border-radius: 50%;height: 100px">
+            </div>
+            <div class="col-10" style="font-size: 20pt">
+                <b style="font-size: 40pt">{{ current_user.username }}</b>&emsp;vs.&emsp;{{ current_user.country }}
+            </div>
+        </div>
+        <div style="margin-top: 50px;padding-left: 20px;padding-right: 20px">
+            <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: {{ total_saved_co2/country_total_co2*100}}%"
+                                                                 aria-valuenow="{{total_saved_co2 }}" aria-valuemin="0" aria-valuemax="{{ country_total_co2 }}"></div>
+            </div>
+        </div>
+        <div style="text-align: center;margin-top: 50px;margin-bottom: 50px;font-size: 20pt">
+            <span style="font-size: 50pt;font-weight: 500">{{ total_saved_co2|round(2) }}</span> / {{ country_total_co2|round(2) }} kg CO<sub>2</sub> last month
+        </div>
+
+        <div id="accordion">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" style="color: #000">
+                  Your climate balance
+                </button>
+              </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body" style="margin-left: 10% ">
+                <ul>
+                    {% for done_challenge in done_challenges %}
+                    <li>{{ done_challenge.done_at | datetime }} - {{ done_challenge.challenge.challengename }}: {{ done_challenge.challenge.co2offset }}</li>
+                    {% endfor %}
+                </ul>
+                <br><b>Total saved: {{ total_saved_co2|round(2) }} kg CO<sub>2</sub></b>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-lg-4 col-m-6" style="margin-top: 50px;padding-left: 7%;padding-right: 7%">
+        {% block right_side %}{% endblock %}
+    </div>
+    <div class="col-lg-2">
+    </div>
+</div>
+{% endblock %}
+
