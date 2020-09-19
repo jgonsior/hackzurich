@@ -26,7 +26,7 @@ def challenge(challenge_id):
     return render_template("challenges/challenges.html", challenge=challenge)
 
 
-@blueprint.route("/create_new", methods=["GET", "POST"])
+@blueprint.route("/create_new/", methods=["GET", "POST"])
 @login_required
 def create_new():
     form = ChallengeForm(request.form)
