@@ -20,71 +20,15 @@ import babel
 
 
 blueprint = Blueprint(
-    "challenge_blueprint", __name__, url_prefix="/challenges", static_folder="../static"
+    "company_blueprint", __name__, url_prefix="/companies", static_folder="../static"
 )
 
 
-@blueprint.route("/<int:challenge_id>")
+@blueprint.route("/<int:company_id>")
 @login_required
-def challenge(challenge_id):
-    challenge = Challenge.query.filter_by(id=challenge_id).first()
-    company = Company.query.filter_by(id=challenge.company_id).first()
-    challenge.company = company
-
-    user_challenge_association = (
-        User_Challenge_Association.query.filter_by(
-            user_id=current_user.id, challenge_id=challenge.id
-        )
-        .filter(User_Challenge_Association.done_at.is_(None))
-        .order_by(User_Challenge_Association.commited_to_at.desc())
-        .first()
-    )
-
-    streak = (
-        User_Challenge_Association.query.filter_by(
-            user_id=current_user.id, challenge_id=challenge.id, succeeded=True
-        )
-        .order_by(User_Challenge_Association.commited_to_at.desc())
-        .all()
-    )
-
-    if len(streak) > 1:
-        # cut off streak
-        cut_off_date = datetime(*streak[0].done_at.timetuple()[:3])
-        for user_challenge_association in streak[1:]:
-            if (
-                datetime(*user_challenge_association.done_at.timetuple()[:3])
-                + timedelta(days=1)
-                == cut_off_date
-            ):
-                cut_off_date = datetime(
-                    *user_challenge_association.done_at.timetuple()[:3]
-                )
-            else:
-                break
-
-        streak = [s for s in streak if s.done_at > cut_off_date]
-
-    total_co2offset = (
-        User_Challenge_Association.query.filter_by(challenge_id=challenge.id).count()
-        * challenge.co2offset
-    )
-
-    co2offset_by_you = (
-        User_Challenge_Association.query.filter_by(
-            challenge_id=challenge.id, user_id=current_user.id
-        ).count()
-        * challenge.co2offset
-    )
-
-    return render_template(
-        "challenges/challenges.html",
-        challenge=challenge,
-        user_challenge_association=user_challenge_association,
-        streak=streak,
-        total_co2offset=total_co2offset,
-        co2offset_by_you=co2offset_by_you,
-    )
+def display(compnay_id):
+    company = Company.query.filter_by(id=company_id).first()
+    return render_template("companies/company.html", company=company)
 
 
 @blueprint.route("/create_new/", methods=["GET", "POST"])
