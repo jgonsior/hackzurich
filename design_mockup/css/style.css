@@ -21,7 +21,7 @@
     width: 90px;
 }
 .landpage {
-    background-image: url("../imgs/landing_page1.jpg");
+    /* background-image: url("../imgs/landing_page1.jpg"); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

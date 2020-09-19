@@ -272,3 +272,322 @@ ul.timeline > li:before {
     height: 20px;
     z-index: 400;
 }
+
+
+
+/* abdullah styles */
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 300;
+}
+* {
+    box-sizing: border-box;
+}
+/* start landpage */
+.navbar {
+    z-index: 99;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: #8ee064;
+    line-height: 4px;
+}
+.navbar-light .navbar-brand {
+    color: #8ee064;
+    font-weight: bold;
+}
+.navbar-brand img {
+    width: 90px;
+}
+.landpage {
+    /* background-image: url("/static/build/img/landing_page1.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
+.landpage .overlay {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 90;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+/* end landpage */
+/* start footerdown */
+.footer > div:first-of-type {
+    background-color: #8ee064;
+    color: white;
+}
+.footer .container {
+    padding-top: 60px;
+}
+.footerDown {
+    text-align: center;
+    background-color: #000;
+}
+.footerDown ul {
+    list-style: none;
+    padding: 0;
+}
+.contact-links {
+    direction: rtl;
+}
+.footerDown ul li {
+    text-align: center;
+    display: inline-block;
+    padding: 10px;
+}
+.footerDown ul li a {
+    color: #fff;
+}
+.socialFooter i:hover {
+    color: #8ee064;
+}
+.foot-links ul {
+    margin-bottom: 0;
+}
+.foot-links ul a {
+    color: #8ee064;
+}
+/* end footerdown */
+/* start login navbar page */
+.profile-toggle {
+    position: absolute;
+    right: 0;
+    top: 31px;
+    width: 180px;
+    height: 200px;
+    background-color: #fff;
+    color: #8ee064;
+    border-radius: 6px;
+    display: none;
+}
+.profile-toggle ul li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #F8F9FA;
+}
+.profile-toggle ul li:hover {
+   background-color: #8ee064;
+   color: #fff;
+   padding-left: 4px;
+   font-size: 20px;
+}
+/* end login navbar page  */
+/* start profile-panel */
+.profile-panel{
+    background-color: #F8F9FA;
+    /* height: 100%; */
+    /* overflow: hidden; */
+}
+.profile-panel .row {
+    margin: 0;
+}
+.profile-panel .up {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #f6f6f6;
+}
+.profile-panel .up img {
+    float: left;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 7px 7px 14px 10px;
+}
+.profile-panel .up p {
+    padding-top: 26px;
+    font-weight: bold;
+    font-size: 16px;
+}
+.progress {
+    margin-top: 20px;
+    height: 3rem;
+}
+.progress .progress-bar {
+    background-color: #8ee064;
+}
+.progress p {
+    line-height: 34px;
+    padding: 6px;
+    font-size: 19px;
+}
+.user-links {
+    margin: 20px;
+}
+.user-links li {
+    padding: 4px 0;
+    font-size: 18px;
+    cursor: pointer;
+    /* border-bottom: 1px solid; */
+}
+.user-links li.active{
+    padding-left: 2px;
+    border-radius: 5px;
+    background-color: #8ee064;
+    color: #fff;
+}
+.user-links li:hover, .user-links li a:hover {
+    padding-left: 2px;
+    border-radius: 5px;
+    background-color: #8ee064;
+    color: #fff;
+}
+.user-links li a {
+    color: #123;
+    text-decoration: none;
+}
+.shortcuts{
+    margin: 20px;
+}
+.shortcuts li a{
+    color: #123;
+}
+/* end profile-panel */
+/* start daily challenge */
+.profile-panel .dailyChallenge .challenge-bar{
+    margin: auto;
+    width: 510px;
+    display: flex;
+    direction: ltr;
+    margin-bottom: 20px;
+}
+.profile-panel .dailyChallenge .challenge-bar li{
+    float: right;
+    overflow: hidden;
+    padding: 16px;
+    font-size: 23px;
+    cursor: pointer;
+}
+.profile-panel .dailyChallenge .challenge-bar .active{
+    border-bottom: 1px solid;
+    color: #8ee064;
+}
+.profile-panel .dailyChallenge .challenge
+,.profile-panel .oldChallenge .challenge{
+    cursor: pointer;
+    position: relative;
+    width: 200px;
+    margin-bottom: 6px;
+}
+.profile-panel .dailyChallenge .challenge:hover .order p,
+.profile-panel .oldChallenge .challenge:hover .order p{
+    background-color: #8ee064;
+}
+.profile-panel .dailyChallenge .challenge:hover .inner .p,
+.profile-panel .oldChallenge .challenge:hover .inner .p{
+    color: #8ee064;
+    font-weight: bold;
+}
+.profile-panel .dailyChallenge .challenge .order .active,
+.profile-panel .oldChallenge .challenge .order .active{
+    background-color: #8ee064;
+}
+.profile-panel .dailyChallenge .challenge .order p,
+.profile-panel .oldChallenge .challenge .order p{
+    background-color: #707070;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    margin-left: 3px;
+    position: relative;
+    margin-bottom: -26px;
+}
+.profile-panel .dailyChallenge .challenge .inner,
+.profile-panel .oldChallenge .challenge .inner{
+    padding: 10px;
+    border: 1px solid #707070;
+    height: 140px;
+}
+.profile-panel .dailyChallenge .challenge .inner:hover,
+.profile-panel .oldChallenge .challenge .inner:hover{
+    color: #fff;
+    border: 1px solid #8ee064;
+    background-color: #8ee064;
+    transition: ease-in-out all 0.6s;
+}
+.profile-panel .dailyChallenge .challenge .inner .P,
+.profile-panel .oldChallenge .challenge .inner .P{
+    margin-top: -32px;
+    text-align: right;
+}
+.profile-panel .dailyChallenge .challenge .inner .span,
+.profile-panel .oldChallenge .challenge .inner .span{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 30px;
+}
+.profile-panel .dailyChallenge .challenge .inner .btn,
+.profile-panel .oldChallenge .challenge .inner .btn{
+    border: none;
+    float: right;
+    background-color: #8ee064;
+}
+.profile-panel .dailyChallenge .challenge .inner:hover .btn,
+.profile-panel .oldChallenge .challenge .inner:hover .btn{
+    border: none;
+    float: right;
+    color: #8ee064;
+    background-color: #fff;
+}
+
+/* end daily challenge */
+/* start buddy challenge */
+.buddyChallenge .buddy{
+    border:1px solid #8ee064;
+    border-radius: 5px;
+    line-height: 120px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.buddyChallenge .buddy img{
+    width: 120px;
+}
+.buddyChallenge .buddy .btn{
+    margin-top: 40px;
+    border: none;
+    background-color: #8ee064;
+}
+/* end buddy challenge */
+/* styling the pop up details */
+.pop-details{
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(151, 151, 151, 0.5);
+}
+.pop-details .container{
+    position: fixed;
+    border-radius: 9px;
+    top: 50%;
+    margin-top: -200px;
+    left: 50%;
+    margin-left: -175px;
+    width: 400px;
+    height: 350px;
+    background-color: #fff;
+}
+.pop-details .container p{
+ font-weight: normal;
+ font-size: 20px;
+}
+.pop-details .container ul li{
+ padding: 2px;
+ color: #888;
+}
+.pop-details .container .float-right{
+  background-color: #8ee064;
+  border: none;
+}
+/* end styling the pop up details */
