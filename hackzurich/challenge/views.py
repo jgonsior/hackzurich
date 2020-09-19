@@ -38,7 +38,7 @@ def create_newr():
             active=form.active.data,
         )
         flash("You've successfully created challenge ", str(form.challengename.data))
-        return redirect(url_for("user.members"))
+        return redirect(url_for("user_blueprint.members"))
     else:
         flash_errors(form)
     return render_template("challenges/create_new.html", form=form)

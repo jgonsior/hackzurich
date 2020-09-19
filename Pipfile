@@ -34,6 +34,7 @@ Flask-DebugToolbar = "==0.11.0"
 # Environment variable parsing
 environs = "==8.0.0"
 flask-admin = "*"
+flask-socketio = "*"
 
 [dev-packages]
 # Testing

@@ -6,10 +6,13 @@
     <h3>Stuff</h3>
     <p><a href="/challenges/done/{{ challenge_id }}" class="btn btn-primary btn-large">Mark challenge done for today</a></p>
     <p><a href="/challenges/participate/{{ challenge_id }}" class="btn btn-primary btn-large">Enroll for this challenge</a></p>
-        <p><a href="/users/" class="btn btn-primary btn-large">Go back to challenge overview</a></p>
-    </div>
-
+    <p><a href="/users/" class="btn btn-primary btn-large">Go back to challenge overview</a></p>
 </div>
 
 {% endblock %}
 
+{% block js %}
+<script type="application/javascript">
+    connect_to_socketio();
+</script>
+{% endblock %}
