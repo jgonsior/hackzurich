@@ -645,7 +645,7 @@ ul.timeline > li:before {
 .clearfix {
   padding-left: 27px;
 }
-#username {
+#profile_username {
   font-size: 24pt;
 
 }
@@ -658,7 +658,7 @@ ul.timeline > li:before {
 }
 
 @media (min-width:480px)  { /* smartphones, Android phones, landscape iPhone */
-#username {
+#profile_username {
 
   font-size: 40pt;
 }
