@@ -36,7 +36,7 @@ from hackzurich.extensions import (
 def create_dummy_data():
     User.query.delete()
     admin = User(
-        username="admin",
+        username="JoinIN Bot",
         email="admin@example.org",
         password="testtest",
         active=True,
@@ -46,7 +46,7 @@ def create_dummy_data():
     db.session.add(admin)
 
     normal_user = User(
-        username="testuser",
+        username="Max Mustermann",
         email="test@example.org",
         password="testtest",
         active=True,
@@ -55,7 +55,7 @@ def create_dummy_data():
     db.session.add(normal_user)
 
     normal_user2 = User(
-        username="testuser2",
+        username="Maxine Musterfrau",
         email="test2@example.org",
         password="testtest",
         active=True,
@@ -72,21 +72,30 @@ def create_dummy_data():
     )
     db.session.add(normal_user3)
 
-    category1 = Category(name="Cat 1", parent_id=None)
+    category1 = Category(name="Food", parent_id=None)
     id1 = db.session.add(category1)
     db.session.flush()
 
-    category2 = Category(name="Cat 2", parent_id=category1.id)
+    category2 = Category(name="Energy", parent_id=category1.id)
     id2 = db.session.add(category2)
+
+    category3 = Category(name="Transport", parent_id=category1.id)
+    id2 = db.session.add(category3)
+
+    category4 = Category(name="Health", parent_id=category1.id)
+    id2 = db.session.add(category4)
+
+    category5 = Category(name="Social", parent_id=category1.id)
+    id2 = db.session.add(category5)
 
     db.session.flush()
 
-    company1 = Company(name="Migros", description="Big swiss supermarket chain")
+    company1 = Company(name="Accenture", description="Description")
     db.session.add(company1)
-    company2 = Company(
-        name="Climeworks", description="Greta approved CO2 emission reducer"
-    )
+    company2 = Company(name="McKinsey", description="McKinsey description")
     db.session.add(company2)
+    company3 = Company(name="SmartSolation", description="McKinsey description")
+    db.session.add(company3)
     db.session.flush()
 
     chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 1")
@@ -94,60 +103,140 @@ def create_dummy_data():
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
     challenge = Challenge(
-        challengename="Challenge 1",
-        description="Lorem ipsum",
+        challengename="The cold and amazing shower!",
+        description="""
+Thousands of people from all over the world already shower cold. Not only will you save energy, CO2 and water but there are also many positive effects on your health connected with showering cold.  Scientists found out, that cold showers do not only relief stress and prevents depressions, but also help to develop a more robust immune response.
+Find out more:
+https://www.wimhofmethod.com/benefits-of-cold-showers
+https://www.healthline.com/health/cold-shower-benefits#improved-metabolism
+
+
+You will save:
+0.5kg of CO2 per shower (based on gas boilers)
+Equiv. 3.3 km with an average car
+
+Company supporting you:
+3X Carbon offsets in addition
+        """,
         active=True,
         category_id=category1.id,
-        co2offset=0.1,
+        co2offset=0.005,
         company_id=company1.id,
         chat_room=chat_room,
     )
     db.session.add(challenge)
 
-    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 2")
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id=challenge.challengename
+    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
     challenge1 = Challenge(
-        challengename="Challenge 2",
-        description="Lorem ipsum",
+        challengename="Obvious Outdoor",
+        description="""
+The world is calling. Get out and enjoy your surroundings today. You can choose between running or cycling.
+Still undecided?
+Learn more: https://www.livestrong.com/article/372790-cycling-vs-running-calories/
+
+Pick:
+Run 4/8/12km
+Cycle 15/30/45km
+Company supporting you: Accenture!
+Run: 20/20/30 kg Carbon offset
+Eqvuiv. 66km/124km/200km with an average car
+        """,
         active=True,
-        co2offset=0.01,
-        category_id=category1.id,
+        co2offset=0.03,
+        category_id=category2.id,
         company_id=company1.id,
         chat_room=chat_room,
     )
     db.session.add(challenge1)
 
-    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 3")
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id=challenge1.challengename
+    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
     challenge2 = Challenge(
-        challengename="Challenge 3",
-        description="Lorem ipsum",
-        active=False,
-        co2offset=0.05,
-        category_id=category1.id,
+        challengename="Just breathe and let us care about the rest!",
+        description="""
+
+It sounds easy, but yet it can have a great impact on your life. Today, try to find three or more moments to stop and focus on your breath for two minutes.
+Why does it matter to us? We want to give something back to society and support you to relief stress and balance your mental health. We are sure it will empower you to take better care of our planet too.
+Find out more: link to instruction
+
+
+Challenge:
+3*2 min breathing!
+
+Company supporting you: McKinsey
+20 kg of Carbon offset
+Equiv. 66km with an average car
+        """,
+        active=True,
+        co2offset=0.02,
+        category_id=category3.id,
         company_id=company2.id,
         chat_room=chat_room,
     )
     db.session.add(challenge2)
 
-    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 4")
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id=challenge2.challengename
+    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
+
     challenge3 = Challenge(
-        challengename="Challenge 4",
-        description="Lorem ipsum",
+        challengename="Lower your thermostat by 1° C",
+        description="""
+Average Swiss household (44m^2 per person): 0.4 kg of CO2 per heating day 
+
+Company supporting you: SmartSolation
+10 kg of Carbon offset
+        """,
         active=True,
-        co2offset=0.03,
-        category_id=category2.id,
-        company_id=company2.id,
+        co2offset=0.1,
+        category_id=category4.id,
+        company_id=company3.id,
         chat_room=chat_room,
     )
     db.session.add(challenge3)
+
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id=challenge3.challengename
+    )
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
+
+    challenge4 = Challenge(
+        challengename="Love your clothesline!",
+        description="""
+Wash a load of laundry washed and dry it on a clothesline.
+Find out more: https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl
+
+CO2 savings: 
+1.8 kg of CO2
+        """,
+        active=True,
+        co2offset=0.018,
+        category_id=category5.id,
+        company_id=company3.id,
+        chat_room=chat_room,
+    )
+    db.session.add(challenge3)
+
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id=challenge4.challengename
+    )
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
 
     db.session.flush()
 
