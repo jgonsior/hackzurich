@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ url_for('public_blueprint.home') }}">
-      <img src="{{static_url_for('static', filename='build/img/favicon.png') }}" alf=""></a>
+      <img src="{{static_url_for('static', filename='build/img/favicon.png') }}" alt=""></a>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +40,7 @@
                     <li><i class="fas fa-cog"></i> Settings</li>
                     <li><i class="far fa-question-circle"></i> Help</li>
                     <li><i class="fas fa-user-edit"></i> Edit profile</li>
-                    <li><a href="{{ url_for('public_blueprint.logout') }}"<i class="fas fa-sign-out-alt"></i> log Out</li>
+                    <li><a href="{{ url_for('public_blueprint.logout') }}"<i class="fas fa-sign-out-alt"></i> log Out</li></a>
                 </ul>
             </div>
         </li>
