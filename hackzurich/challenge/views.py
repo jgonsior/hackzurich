@@ -22,7 +22,6 @@ blueprint = Blueprint(
 @blueprint.route("/<int:challenge_id>")
 @login_required
 def challenge(challenge_id):
-    print(challenge_id)
     """List members."""
     return render_template("challenges/challenges.html", challenge_id=challenge_id)
 
@@ -38,7 +37,7 @@ def create_newr():
             active=form.active.data,
         )
         flash("You've successfully created challenge ", str(form.challengename.data))
-        return redirect(url_for("user.members"))
+        return redirect(url_for("user_blueprint.members"))
     else:
         flash_errors(form)
     return render_template("challenges/create_new.html", form=form)

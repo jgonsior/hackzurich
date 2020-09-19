@@ -17,7 +17,7 @@ from hackzurich.user.forms import RegisterForm
 from hackzurich.user.models import User
 from hackzurich.utils import flash_errors
 
-blueprint = Blueprint("public", __name__, static_folder="../static")
+blueprint = Blueprint("public_blueprint", __name__, static_folder="../static")
 
 
 @login_manager.user_loader
@@ -36,7 +36,7 @@ def home():
         if form.validate_on_submit():
             login_user(form.user)
             flash("You are logged in.", "success")
-            redirect_url = request.args.get("next") or url_for("user.members")
+            redirect_url = request.args.get("next") or url_for("user_blueprint.members")
             return redirect(redirect_url)
         else:
             flash_errors(form)
@@ -49,7 +49,7 @@ def logout():
     """Logout."""
     logout_user()
     flash("You are logged out.", "info")
-    return redirect(url_for("public.home"))
+    return redirect(url_for("public_blueprint.home"))
 
 
 @blueprint.route("/register/", methods=["GET", "POST"])
@@ -64,7 +64,7 @@ def register():
             active=True,
         )
         flash("Thank you for registering. You can now log in.", "success")
-        return redirect(url_for("public.home"))
+        return redirect(url_for("public_blueprint.home"))
     else:
         flash_errors(form)
     return render_template("public/register.html", form=form)

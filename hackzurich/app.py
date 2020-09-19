@@ -6,7 +6,7 @@ import sys
 from flask import Flask, render_template
 from flask_admin.contrib.sqla import ModelView
 
-from hackzurich import commands, public, user, challenge
+from hackzurich import commands, public, user, challenge, chat
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -16,7 +16,8 @@ from hackzurich.extensions import (
     flask_static_digest,
     login_manager,
     migrate,
-    admin
+    admin,
+    socketio
 )
 
 
@@ -48,6 +49,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     flask_static_digest.init_app(app)
     admin.init_app(app)
+    socketio.init_app(app)
     return None
 
 
@@ -90,10 +92,15 @@ def register_commands(app):
 
 
 def register_admin(app):
+    """Register admin interface."""
     from hackzurich.user.models import User
-    from hackzurich.challenge.models import Challenge
+    from hackzurich.challenge.models import Challenge, Category
+    from hackzurich.chat.models import ChatMessage, ChatRoom
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Challenge, db.session))
+    admin.add_view(ModelView(Category, db.session))
+    admin.add_view(ModelView(ChatRoom, db.session))
+    admin.add_view(ModelView(ChatMessage, db.session))
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
 

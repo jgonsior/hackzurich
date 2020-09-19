@@ -1,7 +1,7 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-  <a class="navbar-brand" href="{{ url_for('public.home') }}">
-     hackzurich 
+  <a class="navbar-brand" href="{{ url_for('public_blueprint.home') }}">
+     hackzurich
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
     aria-expanded="false" aria-label="Toggle navigation">
@@ -11,21 +11,21 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('public.home') }}">Home
+        <a class="nav-link" href="{{ url_for('public_blueprint.home') }}">Home
           <span class="sr-only">(current)</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('public.about') }}">About</a>
+        <a class="nav-link" href="{{ url_for('public_blueprint.about') }}">About</a>
       </li>
     </ul>
     {% if current_user and current_user.is_authenticated %}
     <ul class="navbar-nav my-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="{{ url_for('user.members') }}">Logged in as {{ current_user.username }}</a>
+        <a class="nav-link" href="{{ url_for('user_blueprint.members') }}">Logged in as {{ current_user.username }}</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="{{ url_for('public.logout') }}">
+        <a class="nav-link" href="{{ url_for('public_blueprint.logout') }}">
           <i class="fa fa-sign-out"></i>
         </a>
       </li>
@@ -41,7 +41,7 @@
     </form>
     <ul class="navbar-nav my-auto">
       <li class="nav-item">
-        <a class="nav-link navbar-text" href="{{ url_for('public.register') }}">Create account</a>
+        <a class="nav-link navbar-text" href="{{ url_for('public_blueprint.register') }}">Create account</a>
       </li>
     </ul>
     {% endif %}
