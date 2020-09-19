@@ -24,7 +24,7 @@ class Role(PkModel):
 
     def __init__(self, name, **kwargs):
         """Create instance."""
-        super().__init__(name=name, **kwargs)
+        super().__init__(name=name ** kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
@@ -37,17 +37,15 @@ class User(UserMixin, PkModel):
     __tablename__ = "users"
     username = Column(db.String(80), unique=True, nullable=False)
     email = Column(db.String(80), unique=True, nullable=False)
-    #: The hashed password
     password = Column(db.LargeBinary(128), nullable=True)
+    country = Column(db.String(200), nullable=False)
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
-    first_name = Column(db.String(30), nullable=True)
-    last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
 
-    def __init__(self, username, email, password=None, **kwargs):
+    def __init__(self, username, email, country, password=None, **kwargs):
         """Create instance."""
-        super().__init__(username=username, email=email, **kwargs)
+        super().__init__(username=username, email=email, country=country, **kwargs)
         if password:
             self.set_password(password)
         else:
