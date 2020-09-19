@@ -10,7 +10,7 @@ from flask import (
     url_for,
 )
 from flask_login import login_required, login_user, logout_user
-
+import csv
 from hackzurich.extensions import login_manager
 from hackzurich.public.forms import LoginForm
 from hackzurich.user.forms import RegisterForm
@@ -55,6 +55,11 @@ def logout():
 @blueprint.route("/register/", methods=["GET", "POST"])
 def register():
     """Register new user."""
+
+    with open("co2data/co2clean.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        countries = [rows[0] for rows in reader]
+
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         User.create(
@@ -62,13 +67,13 @@ def register():
             email=form.email.data,
             password=form.password.data,
             active=True,
-            country=form.country.data
+            country=form.country.data,
         )
         flash("Thank you for registering. You can now log in.", "success")
         return redirect(url_for("public_blueprint.home"))
     else:
         flash_errors(form)
-    return render_template("public/register.html", form=form)
+    return render_template("public/register.html", form=form, countries=countries)
 
 
 @blueprint.route("/about/")
