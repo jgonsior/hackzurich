@@ -6,6 +6,8 @@ import sys
 from flask import Flask, render_template
 
 from hackzurich import commands, public, user, challenge
+from hackzurich.user.models import User
+from hackzurich.challenge.models import Challenge, Category
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -18,6 +20,67 @@ from hackzurich.extensions import (
 )
 
 
+def create_dummy_data():
+    User.query.delete()
+    admin = User(
+        username="admin",
+        email="admin@example.org",
+        password="testtest",
+        active=True,
+        is_admin=True,
+    )
+    db.session.add(admin)
+
+    normal_user = User(
+        username="testuser",
+        email="test@example.org",
+        password="testtest",
+        active=True,
+    )
+    db.session.add(normal_user)
+
+    category1 = Category(name="Cat 1", parent_id=None)
+    id1 = db.session.add(category1)
+    db.session.flush()
+
+    category2 = Category(name="Cat 2", parent_id=category1.id)
+    id2 = db.session.add(category2)
+
+    db.session.flush()
+
+    challenge = Challenge(
+        challengename="Challenge 1",
+        description="Lorem ipsum",
+        active=True,
+        category_id=category1.id,
+    )
+    db.session.add(challenge)
+
+    challenge = Challenge(
+        challengename="Challenge 2",
+        description="Lorem ipsum",
+        active=True,
+        category_id=category1.id,
+    )
+    db.session.add(challenge)
+
+    challenge = Challenge(
+        challengename="Challenge 3",
+        description="Lorem ipsum",
+        active=False,
+        category_id=category1.id,
+    )
+    db.session.add(challenge)
+
+    challenge = Challenge(
+        challengename="Challenge 4",
+        description="Lorem ipsum",
+        active=True,
+        category_id=category2.id,
+    )
+    db.session.add(challenge)
+
+
 def create_app(config_object="hackzurich.settings"):
     """Create application factory, as explained here: http://flask.pocoo.org/docs/patterns/appfactories/.
 
@@ -25,12 +88,20 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
+
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
     register_shellcontext(app)
     register_commands(app)
     configure_logger(app)
+
+    with app.app_context():
+        if not User.query.count():
+            app.logger.info("Creating dummy db data")
+            create_dummy_data()
+            db.session.commit()
+
     return app
 
 

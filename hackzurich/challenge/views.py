@@ -10,7 +10,7 @@ from flask import (
     render_template,
     url_for,
 )
-from flask_login import login_required
+from flask_login import login_required, current_user
 from .forms import ChallengeForm
 from .models import Challenge
 
@@ -23,7 +23,6 @@ blueprint = Blueprint(
 @login_required
 def challenge(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
-    """List members."""
     return render_template("challenges/challenges.html", challenge=challenge)
 
 
@@ -42,3 +41,19 @@ def create_new():
     else:
         flash_errors(form)
     return render_template("challenges/create_new.html", form=form)
+
+
+@blueprint.route("/mark_done/<int:challenge_id>")
+@login_required
+def mark_done(challenge_id):
+    challenge = Challenge.query.filter_by(id=challenge_id).first()
+    return render_template("challenges/challenges.html", challenge=challenge)
+
+
+@blueprint.route("/commit/<int:challenge_id>")
+@login_required
+def commit(challenge_id):
+    challenge = Challenge.query.filter_by(id=challenge_id).first()
+    user = current_user
+    print(user)
+    return render_template("challenges/challenges.html", challenge=challenge)
