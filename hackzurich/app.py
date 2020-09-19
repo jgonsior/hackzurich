@@ -2,7 +2,7 @@
 """The app module, containing the app factory function."""
 import logging
 import sys
-
+import datetime as dt
 from flask import Flask, render_template
 from flask_admin.contrib.sqla import ModelView
 
@@ -105,10 +105,20 @@ def create_dummy_data():
     )
     db.session.add(user_challenge_association11)
 
-    user_challenge_association22 = User_Challenge_Association(
-        normal_user2.id, challenge2.id
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
     )
-    db.session.add(user_challenge_association22)
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
+    )
+    db.session.add(user_challenge_association12)
+
+    user_challenge_association12 = User_Challenge_Association(
+        normal_user.id, challenge1.id, succeeded=True, done_at=dt.datetime.now()
+    )
+    db.session.add(user_challenge_association12)
 
     user_challenge_association31 = User_Challenge_Association(
         normal_user3.id, challenge1.id

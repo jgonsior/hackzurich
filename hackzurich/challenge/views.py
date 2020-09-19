@@ -27,7 +27,7 @@ def challenge(challenge_id):
     challenge = Challenge.query.filter_by(id=challenge_id).first()
 
     user_challenge_association = User_Challenge_Association.query.filter_by(
-        user_id=current_user.id, challenge_id=challenge.id
+        user_id=current_user.id, challenge_id=challenge.id, done_at=None
     ).first()
 
     return render_template(
@@ -54,6 +54,27 @@ def create_new():
     return render_template("challenges/create_new.html", form=form)
 
 
+@blueprint.route("/mark_failed/<int:challenge_id>")
+@login_required
+def mark_failed(challenge_id):
+    challenge = Challenge.query.filter_by(id=challenge_id).first()
+
+    user_challenge_association = (
+        User_Challenge_Association.query.filter_by(
+            user_id=current_user.id, challenge_id=challenge.id
+        )
+        .order_by(User_Challenge_Association.commited_to_at.desc())
+        .first()
+    )
+    user_challenge_association.done_at = dt.datetime.now()
+    user_challenge_association.succeeded = False
+    db.session.commit()
+
+    flash("You've aborted challenge " + str(challenge.challengename))
+
+    return redirect(url_for("challenge_blueprint.challenge", challenge_id=challenge_id))
+
+
 @blueprint.route("/mark_done/<int:challenge_id>")
 @login_required
 def mark_done(challenge_id):
@@ -66,7 +87,8 @@ def mark_done(challenge_id):
         .order_by(User_Challenge_Association.commited_to_at.desc())
         .first()
     )
-    user_challenge_association.succeeded_at = dt.datetime.now()
+    user_challenge_association.done_at = dt.datetime.now()
+    user_challenge_association.succeeded = True
     db.session.commit()
 
     flash("You've successfully done challenge " + str(challenge.challengename))

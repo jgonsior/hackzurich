@@ -19,8 +19,8 @@ class User_Challenge_Association(PkModel):
     user_id = Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     challenge_id = Column(db.Integer, db.ForeignKey("challenges.id"), nullable=False)
     commited_to_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
-    succeeded_at = Column(db.DateTime, nullable=True)
-    active = Column(db.Boolean, nullable=False, default=True)
+    done_at = Column(db.DateTime, nullable=True)
+    succeeded = Column(db.Boolean, nullable=False, default=False)
 
     def __init__(self, user_id, challenge_id, **kwargs):
         super().__init__(user_id=user_id, challenge_id=challenge_id, **kwargs)

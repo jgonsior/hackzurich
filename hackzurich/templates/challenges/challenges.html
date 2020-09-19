@@ -5,16 +5,30 @@
     <h1>Challenge #{{ challenge.id }}</h1>
     <h3>{{ challenge.challengename }}</h3>
     <p>{{ challenge.description }}</p>
-    {% if user_challenge_association.active %}
-    {% if user_challenge_association.succeeded_at != None %}
-    <p>Challenge last done at {{ user_challenge_association.commited_to_at }}</p>
-    {% else %}
-    <p>Committed to this challenge since {{ user_challenge_association.commited_to_at }}</p>
-    {% endif %}
+    {% if user_challenge_association != None %}
+        {% if user_challenge_association.succeeded %}
+        <p>Challenge last done at {{ user_challenge_association.commited_to_at }}</p>
+        {% else %}
+        <p>Committed to this challenge since {{ user_challenge_association.commited_to_at }}</p>
+        {% endif %}
     {% endif %}
 
-    <p><a href="{{ url_for('challenge_blueprint.mark_done', challenge_id=challenge.id) }}" class="btn btn-primary btn-large">Mark challenge done for today</a></p>
-    <p><a href="{{ url_for('challenge_blueprint.commit', challenge_id=challenge.id) }}" class="btn btn-primary btn-large">Commit to this challenge</a></p>
+
+    <p><a href="{{ url_for('challenge_blueprint.mark_done', challenge_id=challenge.id) }}" class="btn btn-primary btn-large
+    {% if user_challenge_association == None %}
+    disabled
+    {% endif %}
+    ">Mark challenge done for today</a></p>
+    <p><a href="{{ url_for('challenge_blueprint.mark_failed', challenge_id=challenge.id) }}" class="btn btn-primary btn-large btn-danger
+    {% if user_challenge_association == None %}
+    disabled
+    {% endif %}
+    ">Abort challenge</a></p>
+    <p><a href="{{ url_for('challenge_blueprint.commit', challenge_id=challenge.id) }}" class="btn btn-primary btn-large
+    {% if user_challenge_association != None %}
+    disabled
+    {% endif %}
+            ">Commit to this challenge</a></p>
     <p><a href="/users/" class="btn btn-primary btn-large">Go back to challenge overview</a></p>
 </div>
 

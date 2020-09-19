@@ -5,24 +5,28 @@
     <h1>Welcome {{ current_user.username }}</h1>
     <h2>@todo show user stats</h2>
     <h3>Please select a challenge for today</h3>
-    
+
     {% for challenge in active_challenges %}
     <div id="{{ challenge.id }}">
         <h4>{{ challenge.challengename }}
-        {% if challenge.user_challenge_association.active %}
-        {% if challenge.user_challenge_association.succeeded_at != None %}
-        <span class="badge badge-secondary">Done</span>
-        {% else %}
-        <span class="badge badge-secondary">Committed</span>
-        {% endif %}
-        {% endif %}
+            {% if challenge.user_challenge_association != None %}
+                {% if challenge.user_challenge_association.done_at != None %}
+                    {% if challenge.user_challenge_association.succeeded %}
+                    <span class="badge badge-secondary">Done</span>
+                    {% else %}
+                    <span class="badge badge-secondary">Cancelled</span>
+                    {% endif %}
+                {% else %}
+                <span class="badge badge-secondary">Committed</span>
+                {% endif %}
+            {% endif %}
         </h4>
         <p>{{ challenge.description }}</p>
         <p><a href="/challenges/{{ challenge.id }}" class="btn btn-primary btn-large">Details</a></p>
     </div>
-  
+
     {% endfor %}
-    
+
 </div>
 
 {% endblock %}
