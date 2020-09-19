@@ -60,6 +60,14 @@ def challenge(challenge_id):
                 cut_off_date = datetime(
                     *user_challenge_association_streak.done_at.timetuple()[:3]
                 )
+            elif (
+                datetime(*user_challenge_association_streak.done_at.timetuple()[:3])
+                == cut_off_date
+            ):
+                cut_off_date = datetime(
+                    *user_challenge_association_streak.done_at.timetuple()[:3]
+                )
+
             else:
                 break
 
