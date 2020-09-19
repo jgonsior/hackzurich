@@ -10,43 +10,72 @@
                     <span>@todo challange balance</span>
                 </p>
             </div>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 20%"
+                                                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                <p>xp eraned</p>
+            </div>
+            <!-- user useful links -->
+            <ul class="list-unstyled user-links">
+                <li class="active" data-class=".dailyChallenge"><i class="fas fa-home"></i> Daily Challenge</li>
+                <li data-class=".buddyChallenge"><i class="fas fa-users"></i> Challenges Buddies</li>                    
+                <li data-class=".oldChallenge"><i class="fas fa-history"></i> Old Challenges</li>
+                <li data-class=".otherLinks"><i class="fas fa-archive"></i> Other links</li>
+            </ul>
+            <h5>Shortcuts</h5>
+            <ul class="shortcuts list-unstyled">
+                <li> <a href=""> Today's heights chellenge</a></li>
+                <li> <a href=""> Challenges Around me </a></li>
+                <li> <a href=""> Events</a></li>
+                <li> <a href=""> Other Ideas </a></li>
+            </ul>
         </div>
-    </div>
-</div>
-<div class="container">
-    <h1>Welcome {{ current_user.username }}</h1>
-    <h2>Done challenges by you</h2>
-    <ul>
-        {% for done_challenge in done_challenges %}
-        <li>{{ done_challenge.done_at | datetime }} - {{ done_challenge.challenge.challengename }}: {{ done_challenge.challenge.co2offset }}</li>
-        {% endfor %}
-        <li><b>Total saved CO2: {{ total_saved_co2 }} </b></li>
-    </ul>
-    <h3>Please select a challenge for today</h3>
 
-    {% for challenge in active_challenges %}
-    <div id="{{ challenge.id }}">
-        <h4>{{ challenge.challengename }}
-            {% if challenge.user_challenge_association != None %}
-            {% if challenge.user_challenge_association.done_at != None %}
-            {% if challenge.user_challenge_association.succeeded %}
-            <span class="badge badge-secondary">Done</span>
-            {% else %}
-            <span class="badge badge-secondary">Cancelled</span>
-            {% endif %}
-            {% else %}
-            <span class="badge badge-secondary">Committed</span>
-            {% endif %}
-            {% endif %}
-        </h4>
-        <i>Saving potential: {{ challenge.co2offset }}kg/co2</i>
-        <p>{{ challenge.description }}</p>
-        <p><a href="/challenges/{{ challenge.id }}" class="btn btn-primary btn-large">Details</a></p>
-    </div>
+        <div class="col-xl-9 col-lg-9">
+            <div class="dailyChallenge">
+                <h5> <i class="fas fa-home"></i>  Daily Challenges</h5>
+                <div class="row">
+                    <h2>Done challenges by you</h2>
+                    <ul>
+                        {% for done_challenge in done_challenges %}
+                        <li>{{ done_challenge.done_at | datetime }} - {{ done_challenge.challenge.challengename }}: {{ done_challenge.challenge.co2offset }}</li>
+                        {% endfor %}
+                        <li><b>Total saved CO2: {{ total_saved_co2 }} </b></li>
+                    </ul>
+                    <div class="row">
+                        {% for challenge in active_challenges %}
+                        <div class="col-xl-4 col-md-4 col-sm-12 food">
+                            <div class="challenge">
+                                <div class="order">
+                                    <p class="active">F</p>
+                                </div>
+                                <div class="inner">
+                                    <p class="p">{{ challenge.challengename }}
+                                        {% if challenge.user_challenge_association != None %}
+                                        {% if challenge.user_challenge_association.done_at != None %}
+                                        {% if challenge.user_challenge_association.succeeded %}
+                                        <span class="badge badge-secondary">Done</span>
+                                        {% else %}
+                                        <span class="badge badge-secondary">Cancelled</span>
+                                        {% endif %}
+                                        {% else %}
+                                        <span class="badge badge-secondary">Committed</span>
+                                        {% endif %}
+                                        {% endif %}
+                                    </p>
+                                    <p class="span">  
+                                        Saving potential: {{ challenge.co2offset }}kg/co2
+                                        Number of participants: 102    
+                                    </p>
+                                    <a id="detail" href="/challenges/{{ challenge.id }}" class="btn btn-primary btn-large">Details</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
 
-    {% endfor %}
-
-</div>
-
-{% endblock %}
+                </div>
+            </div>
+        </div>
+        {% endblock %}
 
