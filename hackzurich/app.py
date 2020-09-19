@@ -92,10 +92,14 @@ def register_commands(app):
 
 
 def register_admin(app):
+    """Register admin interface."""
     from hackzurich.user.models import User
     from hackzurich.challenge.models import Challenge
+    from hackzurich.chat.models import ChatMessage, ChatRoom
     admin.add_view(ModelView(User, db.session))
     admin.add_view(ModelView(Challenge, db.session))
+    admin.add_view(ModelView(ChatRoom, db.session))
+    admin.add_view(ModelView(ChatMessage, db.session))
     app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
 
