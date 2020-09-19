@@ -8,9 +8,14 @@ from datetime import timedelta
 from flask import Flask, render_template
 from flask_admin.contrib.sqla import ModelView
 
-from hackzurich import commands, public, user, challenge
+from hackzurich import commands, public, user, challenge, company
 from hackzurich.user.models import User
-from hackzurich.challenge.models import Challenge, Category, User_Challenge_Association
+from hackzurich.challenge.models import (
+    Challenge,
+    Category,
+    User_Challenge_Association,
+    Company,
+)
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -72,12 +77,21 @@ def create_dummy_data():
 
     db.session.flush()
 
+    company1 = Company(name="Migros", description="Big swiss supermarket chain")
+    db.session.add(company1)
+    company2 = Company(
+        name="Climeworks", description="Greta approved CO2 emission reducer"
+    )
+    db.session.add(company2)
+    db.session.flush()
+
     challenge = Challenge(
         challengename="Challenge 1",
         description="Lorem ipsum",
         active=True,
         category_id=category1.id,
         co2offset=1000,
+        company_id=company1.id,
     )
     db.session.add(challenge)
 
@@ -87,6 +101,7 @@ def create_dummy_data():
         active=True,
         co2offset=100,
         category_id=category1.id,
+        company_id=company1.id,
     )
     db.session.add(challenge1)
 
@@ -96,6 +111,7 @@ def create_dummy_data():
         active=False,
         co2offset=500,
         category_id=category1.id,
+        company_id=company2.id,
     )
     db.session.add(challenge2)
 
@@ -105,6 +121,7 @@ def create_dummy_data():
         active=True,
         co2offset=30,
         category_id=category2.id,
+        company_id=company2.id,
     )
     db.session.add(challenge3)
 
@@ -212,6 +229,7 @@ def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(challenge.views.blueprint)
+    app.register_blueprint(company.views.blueprint)
     return None
 
 

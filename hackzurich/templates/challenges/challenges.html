@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1>Challenge #{{ challenge.id }}</h1>
-    <h3>{{ challenge.challengename }}</h3>
+    <h3>{{ challenge.challengename }} - sponsored by <a href="{{ url_for('company_blueprint.display', company_id=challenge.company.id) }}">{{ challenge.company.name }}</a></h3>
     <p>{{ challenge.description }}</p>
     <p>Saving potential: {{ challenge.co2offset }}kg/co2</p>
     <p>Saved CO2 by all participants in this challenge: {{ total_co2offset }}kg/co2</p>
