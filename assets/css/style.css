@@ -445,6 +445,13 @@ ul.timeline > li:before {
 .shortcuts li a{
     color: #123;
 }
+
+.badge {
+  background-color: #8ee064;
+  color: #111;
+  font-size: 12pt;
+}
+
 /* end profile-panel */
 /* start daily challenge */
 .profile-panel .dailyChallenge .challenge-bar{
