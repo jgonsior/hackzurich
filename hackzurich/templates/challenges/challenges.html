@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-
+    {{ user_challenge_association.id }}
     <h1>Challenge #{{ challenge.id }}</h1>
     <h3>{{ challenge.challengename }} - sponsored by <a href="{{ url_for('company_blueprint.display', company_id=challenge.company.id) }}">{{ challenge.company.name }}</a></h3>
     <p>{{ challenge.description }}</p>

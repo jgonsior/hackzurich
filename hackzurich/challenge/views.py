@@ -34,10 +34,9 @@ def challenge(challenge_id):
 
     user_challenge_association = (
         User_Challenge_Association.query.filter_by(
-            user_id=current_user.id, challenge_id=challenge.id
+            user_id=current_user.id, challenge_id=challenge.id, done_at=None
         )
-        .filter(User_Challenge_Association.done_at.is_(None))
-        .order_by(User_Challenge_Association.commited_to_at.desc())
+        .order_by(User_Challenge_Association.commited_to_at.asc())
         .first()
     )
 
@@ -52,14 +51,14 @@ def challenge(challenge_id):
     if len(streak) > 1:
         # cut off streak
         cut_off_date = datetime(*streak[0].done_at.timetuple()[:3])
-        for user_challenge_association in streak[1:]:
+        for user_challenge_association_streak in streak[1:]:
             if (
-                datetime(*user_challenge_association.done_at.timetuple()[:3])
+                datetime(*user_challenge_association_streak.done_at.timetuple()[:3])
                 + timedelta(days=1)
                 == cut_off_date
             ):
                 cut_off_date = datetime(
-                    *user_challenge_association.done_at.timetuple()[:3]
+                    *user_challenge_association_streak.done_at.timetuple()[:3]
                 )
             else:
                 break
