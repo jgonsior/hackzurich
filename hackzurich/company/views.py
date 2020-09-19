@@ -26,7 +26,7 @@ blueprint = Blueprint(
 
 @blueprint.route("/<int:company_id>")
 @login_required
-def display(compnay_id):
+def display(company_id):
     company = Company.query.filter_by(id=company_id).first()
     return render_template("companies/company.html", company=company)
 
