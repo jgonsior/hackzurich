@@ -39,6 +39,8 @@ class Challenge(PkModel):
     created_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     active = Column(db.Boolean(), default=False)
 
+    chat_room_id = Column(db.String, db.ForeignKey('chat_rooms.room_id'))
+
     def __init__(self, challengename, description, active, **kwargs):
         """Create instance."""
         super().__init__(

@@ -1,32 +1,45 @@
 # -*- coding: utf-8 -*-
-"""Challenge views."""
+"""Chat views."""
 
-# from hackzurich.utils import flash_errors
-from flask import (
-    # Blueprint,
-    # render_template,
-    # request,
-    # flash,
-    # redirect,
-    # render_template,
-    # url_for,
+
+from flask_login import login_required, current_user
+
+from flask_socketio import emit, join_room
+
+from hackzurich.extensions import (
+    socketio,
+    db
 )
 
-from flask_login import login_required
-
-from flask_socketio import emit
-
-from hackzurich.extensions import socketio
-
 # from .forms import ChallengeForm
-# from .models import Challenge
+from .models import ChatMessage
+from ..challenge.models import Challenge
 
-@socketio.on('connect')
+
+@socketio.on('join_room')
 @login_required
-def test_connect():
-    print('connected')
-    emit('connection_successfull', {'data': 'Connected'})
+def join_room_socketio(data):
+    """Join room if challenge exists."""
+    challenge = db.session.query(Challenge).get(data['challenge_id'])
+    if challenge:
+        chat_room = challenge.chat_room
+        join_room(chat_room.room_id)
+        history = chat_room.get_history()
+        emit('join_room', {'history': history})
 
-@socketio.on('disconnect')
-def test_disconnect():
-    print('Client disconnected')
+
+@socketio.on('send_message')
+@login_required
+def send_message(data):
+    """A user wants to send a message to a chat room."""
+    challenge = db.session.query(Challenge).get(data['challenge_id'])
+
+    if challenge:
+        chat_room = challenge.chat_room
+        msg = ChatMessage.create(text=data['text'], user=current_user, room=chat_room)
+        j = msg.get_json()
+
+        emit('new_message', j)
+
+        j['is_self'] = False
+        emit('new_message', j, room=chat_room.room_id, include_self=False)

@@ -1,5 +1,6 @@
 
 {% extends "layout.html" %}
+
 {% block content %}
 <div class="container">
     <h1>Challenge {{ challenge_id }}</h1>
@@ -8,11 +9,104 @@
     <p><a href="/challenges/participate/{{ challenge_id }}" class="btn btn-primary btn-large">Enroll for this challenge</a></p>
     <p><a href="/users/" class="btn btn-primary btn-large">Go back to challenge overview</a></p>
 </div>
+<br><br>
+<section class="msger">
+  <header class="msger-header">
+    <div class="msger-header-title">
+      <i class="fas fa-comment-alt"></i> Challenge {{ challenge_id }}
+    </div>
+    <div class="msger-header-options">
+      <span><i class="fas fa-cog"></i></span>
+    </div>
+  </header>
+
+  <main class="msger-chat">
+  </main>
+
+  <form class="msger-inputarea">
+    <input type="text" class="msger-input" placeholder="Enter your message...">
+    <button type="submit" class="msger-send-btn">Send</button>
+  </form>
+</section>
 
 {% endblock %}
 
 {% block js %}
+
 <script type="application/javascript">
-    connect_to_socketio();
+    var socket = connect_to_socketio({{ challenge_id }});
+
+    socket.on('join_room', function(data){
+        data['history'].forEach(function(msg){
+            appendMessage(msg);
+        });
+    });
+
+    socket.on('new_message', function(msg){
+        appendMessage(msg);
+    });
+
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+    // Icons made by Freepik from www.flaticon.com
+    const BOT_IMG = "https://image.flaticon.com/icons/svg/327/327779.svg";
+    const PERSON_IMG = "https://image.flaticon.com/icons/svg/145/145867.svg";
+    const BOT_NAME = "BOT";
+    const PERSON_NAME = "Sajad";
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      msgerInput.value = "";
+      socket.emit('send_message', {'text': msgText, 'challenge_id': {{ challenge_id }} });
+    });
+
+    function appendMessage(msg) {
+
+      if (msg['is_self']){
+        var img = PERSON_IMG;
+        var side = 'right';
+
+      } else {
+        var img = BOT_IMG;
+        var side = 'left';
+      }
+      //   Simple solution for small apps
+      const msgHTML = `
+        <div class="msg ${side}-msg">
+          <div class="msg-img" style="background-image: url(${img})"></div>
+
+          <div class="msg-bubble">
+            <div class="msg-info">
+              <div class="msg-info-name">${msg['user']}</div>
+              <div class="msg-info-time">${formatDate(new Date(msg['written_at']))}</div>
+            </div>
+
+            <div class="msg-text">${msg['text']}</div>
+          </div>
+        </div>
+      `;
+
+      msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+      msgerChat.scrollTop += 500;
+    }
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+      const h = "0" + date.getHours();
+      const m = "0" + date.getMinutes();
+
+      return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+
 </script>
 {% endblock %}
