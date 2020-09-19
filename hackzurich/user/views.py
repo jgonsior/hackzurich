@@ -38,6 +38,14 @@ def members():
         )
         active_challenge.user_challenge_association = user_challenge_association
 
+        active_challenge.total_participants = (
+            User_Challenge_Association.query.distinct(
+                User_Challenge_Association.user_id
+            )
+            .filter_by(challenge_id=active_challenge.id)
+            .count()
+        )
+
     with open("co2data/co2clean.csv") as csvfile:
         reader = csv.reader(csvfile)
         country_co2_csv = {rows[0]: rows[1] for rows in reader}
