@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Challenge views."""
+import csv
 from datetime import datetime, timedelta
 import datetime as dt
 from hackzurich.utils import flash_errors
@@ -77,6 +78,12 @@ def challenge(challenge_id):
         * challenge.co2offset
     )
 
+    with open("co2data/co2clean.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        country_co2_csv = {rows[0]: rows[1] for rows in reader}
+
+    country_total_co2 = country_co2_csv[current_user.country]
+
     return render_template(
         "challenges/challenges.html",
         challenge=challenge,
@@ -84,6 +91,7 @@ def challenge(challenge_id):
         streak=streak,
         total_co2offset=total_co2offset,
         co2offset_by_you=co2offset_by_you,
+        country_total_co2=country_total_co2,
     )
 
 

@@ -3,6 +3,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from hackzurich.challenge.models import Challenge, User_Challenge_Association
+import csv
 
 blueprint = Blueprint(
     "user_blueprint", __name__, url_prefix="/users", static_folder="../static"
@@ -37,9 +38,16 @@ def members():
         )
         active_challenge.user_challenge_association = user_challenge_association
 
+    with open("co2data/co2clean.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        country_co2_csv = {rows[0]: rows[1] for rows in reader}
+
+    country_total_co2 = float(country_co2_csv[current_user.country])
+
     return render_template(
         "users/members.html",
         active_challenges=active_challenges,
         done_challenges=done_challenges,
         total_saved_co2=total_saved_co2,
+        country_total_co2=country_total_co2,
     )
