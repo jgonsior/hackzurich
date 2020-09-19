@@ -1,6 +1,6 @@
 {% extends "two_column.html" %}
 {% block right_side %}
-
+<div class="col-lg-4 col-m-6" style="margin-top: 50px;padding-left: 7%;padding-right: 7%">
 {% for challenge in active_challenges %}
 <div class="challenge" style="margin-bottom: 50px;margin-top: 50px;border: 1px solid;border-color: #111;padding: 10px;background: #fff">
     <div class="row">
@@ -38,5 +38,6 @@
     </div>
 </div>
 {% endfor %}
+</div>
 {% endblock %}
 
