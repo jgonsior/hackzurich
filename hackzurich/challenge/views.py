@@ -185,7 +185,7 @@ def mark_done(challenge_id):
         .count()
     )
 
-    if count_challenges_solved_today > 5:
+    if count_challenges_solved_today == 5:
         company = Company.query.filter_by(id=challenge.company_id).first()
         chat_message = ChatMessage.create(
             user=admin,
