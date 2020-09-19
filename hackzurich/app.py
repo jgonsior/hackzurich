@@ -4,6 +4,7 @@ import logging
 import sys
 
 from flask import Flask, render_template
+from flask_admin.contrib.sqla import ModelView
 
 from hackzurich import commands, public, user, challenge
 from hackzurich.extensions import (
@@ -15,6 +16,7 @@ from hackzurich.extensions import (
     flask_static_digest,
     login_manager,
     migrate,
+    admin
 )
 
 
@@ -25,6 +27,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
+    register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
@@ -44,6 +47,7 @@ def register_extensions(app):
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
     flask_static_digest.init_app(app)
+    admin.init_app(app)
     return None
 
 
@@ -83,6 +87,14 @@ def register_commands(app):
     """Register Click commands."""
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
+
+
+def register_admin(app):
+    from hackzurich.user.models import User
+    from hackzurich.challenge.models import Challenge
+    admin.add_view(ModelView(User, db.session))
+    admin.add_view(ModelView(Challenge, db.session))
+    app.config['FLASK_ADMIN_SWATCH'] = 'cerulean'
 
 
 def configure_logger(app):
