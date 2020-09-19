@@ -16,6 +16,9 @@ from hackzurich.challenge.models import (
     User_Challenge_Association,
     Company,
 )
+
+from hackzurich.chat.models import ChatRoom, ChatMessage
+
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -86,6 +89,12 @@ def create_dummy_data():
     db.session.add(company2)
     db.session.flush()
 
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="room1")
+    chat_message = ChatMessage.create(user=normal_user2, text="Hello!!", room=chat_room)
+    chat_message = ChatMessage.create(
+        user=normal_user3, text="Hello from me as well!!", room=chat_room
+    )
+
     challenge = Challenge(
         challengename="Challenge 1",
         description="Lorem ipsum",
@@ -93,6 +102,7 @@ def create_dummy_data():
         category_id=category1.id,
         co2offset=1000,
         company_id=company1.id,
+        chat_room=chat_room,
     )
     db.session.add(challenge)
 
@@ -103,6 +113,7 @@ def create_dummy_data():
         co2offset=100,
         category_id=category1.id,
         company_id=company1.id,
+        chat_room=chat_room,
     )
     db.session.add(challenge1)
 
@@ -113,6 +124,7 @@ def create_dummy_data():
         co2offset=500,
         category_id=category1.id,
         company_id=company2.id,
+        chat_room=chat_room,
     )
     db.session.add(challenge2)
 
@@ -123,13 +135,18 @@ def create_dummy_data():
         co2offset=30,
         category_id=category2.id,
         company_id=company2.id,
+        chat_room=chat_room,
     )
     db.session.add(challenge3)
 
     db.session.flush()
 
     user_challenge_association11 = User_Challenge_Association(
-        normal_user.id, challenge1.id
+        normal_user.id,
+        challenge1.id,
+        succeeded=True,
+        done_at=dt.datetime.now() - timedelta(days=13),
+        commited_to_at=dt.datetime.now() - timedelta(days=13, hours=1),
     )
     db.session.add(user_challenge_association11)
 
@@ -160,21 +177,6 @@ def create_dummy_data():
             commited_to_at=dt.datetime.now() - timedelta(days=i, hours=1),
         )
         db.session.add(user_challenge_association12)
-
-    user_challenge_association12 = User_Challenge_Association(
-        normal_user.id, challenge1.id,
-    )
-    db.session.add(user_challenge_association12)
-
-    user_challenge_association31 = User_Challenge_Association(
-        normal_user3.id, challenge1.id
-    )
-    db.session.add(user_challenge_association31)
-
-    user_challenge_association32 = User_Challenge_Association(
-        normal_user3.id, challenge2.id
-    )
-    db.session.add(user_challenge_association32)
 
 
 def create_app(config_object="hackzurich.settings"):
@@ -267,7 +269,12 @@ def register_commands(app):
 def register_admin(app):
     """Register admin interface."""
     from hackzurich.user.models import User
-    from hackzurich.challenge.models import Challenge, Category
+    from hackzurich.challenge.models import (
+        Challenge,
+        Category,
+        Company,
+        User_Challenge_Association,
+    )
     from hackzurich.chat.models import ChatMessage, ChatRoom
 
     admin.add_view(ModelView(User, db.session))
@@ -275,6 +282,8 @@ def register_admin(app):
     admin.add_view(ModelView(Category, db.session))
     admin.add_view(ModelView(ChatRoom, db.session))
     admin.add_view(ModelView(ChatMessage, db.session))
+    admin.add_view(ModelView(Company, db.session))
+    admin.add_view(ModelView(User_Challenge_Association, db.session))
     app.config["FLASK_ADMIN_SWATCH"] = "cerulean"
 
 
