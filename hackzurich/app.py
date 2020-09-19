@@ -98,10 +98,10 @@ def create_dummy_data():
     db.session.add(company3)
     db.session.flush()
 
-    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Challenge 1")
-    chat_message = ChatMessage.create(
-        user=admin, text="Welcome to the challenge!", room=chat_room
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="The cold and amazing shower!"
     )
+
     challenge = Challenge(
         challengename="The cold and amazing shower!",
         description="""
@@ -125,13 +125,12 @@ Company supporting you:
         chat_room=chat_room,
     )
     db.session.add(challenge)
-
-    chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id=challenge.challengename
-    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
+
+    chat_room = ChatRoom.create(name="Ein schoener Raum", room_id="Obvious Outdoor")
+
     challenge1 = Challenge(
         challengename="Obvious Outdoor",
         description="""
@@ -153,13 +152,14 @@ Eqvuiv. 66km/124km/200km with an average car
         chat_room=chat_room,
     )
     db.session.add(challenge1)
-
-    chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id=challenge1.challengename
-    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
+
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="Just breathe and let us care about the rest!"
+    )
+
     challenge2 = Challenge(
         challengename="Just breathe and let us care about the rest!",
         description="""
@@ -184,13 +184,13 @@ Equiv. 66km with an average car
     )
     db.session.add(challenge2)
 
-    chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id=challenge2.challengename
-    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
 
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="Lower your thermostat by 1° C"
+    )
     challenge3 = Challenge(
         challengename="Lower your thermostat by 1° C",
         description="""
@@ -207,13 +207,13 @@ Company supporting you: SmartSolation
     )
     db.session.add(challenge3)
 
-    chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id=challenge3.challengename
-    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
 
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="Love your clothesline!"
+    )
     challenge4 = Challenge(
         challengename="Love your clothesline!",
         description="""
@@ -231,9 +231,6 @@ CO2 savings:
     )
     db.session.add(challenge3)
 
-    chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id=challenge4.challengename
-    )
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
     )
@@ -285,7 +282,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    register_admin(app)
+    #  register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
