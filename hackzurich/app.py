@@ -17,6 +17,8 @@ from hackzurich.challenge.models import (
     Company,
 )
 
+from hackzurich.chat.models import ChatRoom, ChatMessage
+
 from hackzurich.extensions import (
     bcrypt,
     cache,
@@ -87,6 +89,9 @@ def create_dummy_data():
     db.session.add(company2)
     db.session.flush()
 
+    chat_room = ChatRoom.create(name='Ein schoener Raum', room_id='room1')
+    chat_message = ChatMessage.create(user=normal_user, text='Hello!!', room=chat_room)
+
     challenge = Challenge(
         challengename="Challenge 1",
         description="Lorem ipsum",
@@ -94,6 +99,7 @@ def create_dummy_data():
         category_id=category1.id,
         co2offset=1000,
         company_id=company1.id,
+        chat_room=chat_room
     )
     db.session.add(challenge)
 
@@ -104,6 +110,7 @@ def create_dummy_data():
         co2offset=100,
         category_id=category1.id,
         company_id=company1.id,
+        chat_room=chat_room
     )
     db.session.add(challenge1)
 
@@ -114,6 +121,7 @@ def create_dummy_data():
         co2offset=500,
         category_id=category1.id,
         company_id=company2.id,
+        chat_room=chat_room
     )
     db.session.add(challenge2)
 
@@ -124,6 +132,7 @@ def create_dummy_data():
         co2offset=30,
         category_id=category2.id,
         company_id=company2.id,
+        chat_room=chat_room
     )
     db.session.add(challenge3)
 
@@ -196,10 +205,10 @@ def create_app(config_object="hackzurich.settings"):
 
     with app.app_context():
 
-        # if not User.query.count():
-        #     app.logger.info("Creating dummy db data")
-        #     create_dummy_data()
-        #     db.session.commit()
+        if not User.query.count():
+            app.logger.info("Creating dummy db data")
+            create_dummy_data()
+            db.session.commit()
 
         @app.template_filter("datetime")
         def format_datetime(value, format="medium"):
