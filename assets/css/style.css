@@ -318,7 +318,7 @@ ul.timeline > li:before {
 /* end landpage */
 /* start footerdown */
 .footer > div:first-of-type {
-    background-color: #8ee064;
+    background-color: #ff0000;
     color: white;
 }
 .footer .container {

@@ -194,7 +194,7 @@ Equiv. 66km with an average car
     challenge3 = Challenge(
         challengename="Lower your thermostat by 1° C",
         description="""
-Average Swiss household (44m^2 per person): 0.4 kg of CO2 per heating day 
+Average Swiss household (44m^2 per person): 0.4 kg of CO2 per heating day
 
 Company supporting you: SmartSolation
 10 kg of Carbon offset
@@ -220,7 +220,7 @@ Company supporting you: SmartSolation
 Wash a load of laundry washed and dry it on a clothesline.
 Find out more: https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl
 
-CO2 savings: 
+CO2 savings:
 1.8 kg of CO2
         """,
         active=True,
