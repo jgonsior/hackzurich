@@ -93,14 +93,29 @@ def challenge(challenge_id):
 
     country_total_co2 = country_co2_csv[current_user.country]
 
+    done_user_challenges = User_Challenge_Association.query.filter_by(
+        user_id=current_user.id, succeeded=True
+    ).all()
+
+    done_challenges = []
+    total_saved_co2 = 0
+    for done_user_challenge in done_user_challenges:
+        done_user_challenge.challenge = Challenge.query.filter_by(
+            id=done_user_challenge.challenge_id
+        ).first()
+        done_challenges.append(done_user_challenge)
+        total_saved_co2 += done_user_challenge.challenge.co2offset
+
     return render_template(
         "challenges/challenges.html",
         challenge=challenge,
         user_challenge_association=user_challenge_association,
         streak=streak,
+        done_challenges=done_challenges,
         total_co2offset=total_co2offset,
+        total_saved_co2=float(total_saved_co2),
         co2offset_by_you=co2offset_by_you,
-        country_total_co2=country_total_co2,
+        country_total_co2=float(country_total_co2),
     )
 
 
