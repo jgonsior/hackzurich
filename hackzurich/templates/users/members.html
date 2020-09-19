@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1>Welcome {{ current_user.username }}</h1>
-    <h2>Done challenges by user</h2>
+    <h2>Done challenges by you</h2>
     <ul>
     {% for done_challenge in done_challenges %}
     <li>{{ done_challenge.done_at | datetime }} - {{ done_challenge.challenge.challengename }}: {{ done_challenge.challenge.co2offset }}</li>
