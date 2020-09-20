@@ -21,6 +21,9 @@
             <div id="collapseDetails" class="collapse" aria-labelledby="headingOne" data-parent="#accordion2">
               <div class="card-body" style="margin-left: 10% ">
                 <p>{{ challenge.description|safe }}</p>
+                {% if challenge.id == 1 %}
+                <p><a href="https://duckduckgo.com/?q={{recipe['title']|replace(' ', '+')}}&iax=images&ia=images">{{recipe['title']}}</a><br>because it typically only uses {{ recipe['co2']}} g of CO<sub>2</sub> per serving.</p>
+                {% endif %}
                 <div style="text-align: right">
                     <p>Saving potential: <b>{{ challenge.co2offset|round(3) }}</b> kg CO<sub>2</sub></p>
                     <p>All participants in this challenge: <b>{{ total_co2offset|round(2) }}</b> kg CO<sub>2</sub></p>

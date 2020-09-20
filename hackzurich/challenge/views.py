@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Challenge views."""
 import csv
+from random import choice
 from datetime import datetime, timedelta
 import datetime as dt
 from hackzurich.utils import flash_errors
@@ -91,6 +92,12 @@ def challenge(challenge_id):
         reader = csv.reader(csvfile)
         country_co2_csv = {rows[0]: rows[1] for rows in reader}
 
+    with open("co2data/foodco2.csv") as csvfile:
+        reader = csv.reader(csvfile)
+        food_co2_csv = [{'title': rows[1], 'co2': rows[2]} for rows in reader]
+
+    recipe = choice(food_co2_csv)
+
     country_total_co2 = country_co2_csv[current_user.country]
 
     done_user_challenges = User_Challenge_Association.query.filter_by(
@@ -116,6 +123,7 @@ def challenge(challenge_id):
         total_saved_co2=float(total_saved_co2),
         co2offset_by_you=co2offset_by_you,
         country_total_co2=float(country_total_co2),
+        recipe=recipe
     )
 
 
