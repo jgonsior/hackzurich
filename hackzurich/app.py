@@ -236,30 +236,6 @@ CO<sub>2</sub> savings:
     )
 
     chat_room = ChatRoom.create(
-        name="Ein schoener Raum", room_id="Love your clothesline!"
-    )
-    challenge4 = Challenge(
-        challengename="Love your clothesline!",
-        description="""
-Wash a load of laundry washed and dry it on a clothesline.
-Find out more: <br><a href="https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl">https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl</a>
-
-CO<sub>2</sub> savings:
-1.8 kg of CO<sub>2</sub>
-        """,
-        active=True,
-        co2offset=0.018,
-        category_id=category5.id,
-        company_id=company3.id,
-        chat_room=chat_room,
-    )
-    db.session.add(challenge4)
-
-    chat_message = ChatMessage.create(
-        user=admin, text="Welcome to the challenge!", room=chat_room
-    )
-
-    chat_room = ChatRoom.create(
         name="Ein schoener Raum", room_id="Food For Thought!"
     )
     challenge5 = Challenge(
@@ -329,7 +305,7 @@ def create_app(config_object="hackzurich.settings"):
     """
     app = Flask(__name__.split(".")[0])
     app.config.from_object(config_object)
-    #  register_admin(app)
+    register_admin(app)
     register_extensions(app)
     register_blueprints(app)
     register_errorhandlers(app)
