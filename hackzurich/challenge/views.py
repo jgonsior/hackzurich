@@ -194,13 +194,13 @@ def mark_done(challenge_id):
         User_Challenge_Association.query.filter_by(challenge_id=challenge.id)
         .filter(
             User_Challenge_Association.commited_to_at
-            >= datetime(*datetime.now().timetuple()[:3])
+            <= datetime(*datetime.now().timetuple()[:3])
         )
         .filter(User_Challenge_Association.done_at != None)
         .count()
     )
 
-    if count_challenges_solved_today == 5:
+    if count_challenges_solved_today % 5 == 0:
         company = Company.query.filter_by(id=challenge.company_id).first()
         chat_message = ChatMessage.create(
             user=admin,

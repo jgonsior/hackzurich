@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ url_for('public_blueprint.home') }}">
-        <img src="{{static_url_for('static', filename='build/img/favicon.png') }}" alt=""></a>
+        <img src="{{static_url_for('static', filename='build/img/logo.png') }}" alt=""></a>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                                                                                               aria-expanded="false" aria-label="Toggle navigation">
@@ -8,41 +8,15 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('public_blueprint.home') }}">Home
-                    <span class="sr-only">(current)</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('public_blueprint.about') }}">About</a>
-            </li>
-        </ul>
+
         {% if current_user and current_user.is_authenticated %}
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ url_for('user_blueprint.members') }}">Profile</a>
-            </li>
-
             <li class="nav-item ">
                 <a class="nav-link" href="{{ url_for('user_blueprint.members') }}">Challenges</a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link" href="{{ url_for('user_blueprint.members') }}">Notifications</a>
-            </li>
-
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="Dropdown">
-                </a>
-                <div class="profile-toggle">
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-cog"></i> Settings</li>
-                        <li><i class="far fa-question-circle"></i> Help</li>
-                        <li><i class="fas fa-user-edit"></i> Edit profile</li>
-                        <li><a href="{{ url_for('public_blueprint.logout') }}"<i class="fas fa-sign-out-alt"></i> log Out</li></a>
-                    </ul>
-                </div>
+            <li class="nav-item mr-auto">
+                <a href="{{ url_for('public_blueprint.logout') }}"><i class="fa fa-sign-out-alt"></i> Log Out</a>
             </li>
         </ul>
         {% elif form %}

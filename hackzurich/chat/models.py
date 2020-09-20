@@ -6,13 +6,7 @@ from sqlalchemy.ext.orderinglist import ordering_list
 
 from flask_login import current_user
 
-from hackzurich.database import (
-    Column,
-    PkModel,
-    db,
-    relationship,
-    reference_col
-)
+from hackzurich.database import Column, PkModel, db, relationship, reference_col
 
 
 class ChatRoom(PkModel):
@@ -48,9 +42,13 @@ class ChatMessage(PkModel):
     written_at = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
 
     chat_room_id = reference_col("chat_rooms", nullable=True)
-    room = relationship("ChatRoom", backref="chat_messages", collection_class=ordering_list('written_at'))
+    room = relationship(
+        "ChatRoom",
+        backref="chat_messages",
+        collection_class=ordering_list("written_at"),
+    )
 
-    user_id = reference_col('users', nullable=True)
+    user_id = reference_col("users", nullable=True)
     user = relationship("User", backref="chat_messages")
 
     def __init__(self, **kwargs):
@@ -64,11 +62,14 @@ class ChatMessage(PkModel):
     def get_json(self):
         """A json representation of the chat message, who, when what."""
         # ISO 8601 datetime format
-        d = {'text': self.text, 'written_at': self.written_at.strftime('%Y-%m-%dT%H:%M:%S.%f%z')}
+        d = {
+            "text": self.text,
+            "written_at": self.written_at.strftime("%Y-%m-%dT%H:%M:%S.%f%z"),
+        }
         if self.user:
-            d['user'] = self.user.username
-            d['is_self'] = self.user == current_user
+            d["user"] = self.user.username
+            d["is_self"] = self.user == current_user
         else:
-            d['user'] = 'anonymous'
-            d['is_self'] = False
+            d["user"] = "anonymous"
+            d["is_self"] = False
         return d

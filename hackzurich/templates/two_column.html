@@ -7,21 +7,21 @@
     </div>
     <div class="col-lg-4 col-m-6">
         <div class="row" style="margin-top: 50px">
-            <div class="col-2">
-                <img src="{{static_url_for('static', filename='build/img/profileimg.jpg') }}" style="border-radius: 50%;height: 100px">
+            <div class="col-2" id="profilePicture">
+                <img  src="{{static_url_for('static', filename='build/img/profileimg.jpg') }}" style="border-radius: 50%;height: 100px">
             </div>
             <div class="col-10" style="font-size: 20pt">
-                <b style="font-size: 40pt">{{ current_user.username }}</b>&emsp;vs.&emsp;{{ current_user.country }}
+                <b id="profile_username">{{ current_user.username }}</b>&emsp;vs.&emsp;{{ current_user.country }}
             </div>
         </div>
         <div style="margin-top: 50px;padding-left: 20px;padding-right: 20px">
             <div class="progress">
-                    <div class="progress-bar" role="progressbar" style="width: {{ total_saved_co2/country_total_co2*100}}%"
-                                                                 aria-valuenow="{{total_saved_co2 }}" aria-valuemin="0" aria-valuemax="{{ country_total_co2 }}"></div>
+                    <div class="progress-bar" role="progressbar" style="width: {{ 100* total_saved_co2 / ((country_total_co2*1000)/52)}}%"
+                                                                 aria-valuenow="{{total_saved_co2 }}" aria-valuemin="0" aria-valuemax="{{ (country_total_co2*1000)/52 }}"></div>
             </div>
         </div>
         <div style="text-align: center;margin-top: 50px;margin-bottom: 50px;font-size: 20pt">
-            <span style="font-size: 50pt;font-weight: 500">{{ total_saved_co2|round(2) }}</span> / {{ country_total_co2|round(2) }} kg CO<sub>2</sub> last month
+            <span style="font-size: 50pt;font-weight: 500">{{ total_saved_co2|round(2) }}</span> / {{ (1000*country_total_co2/52)|round(2) }} kg CO<sub>2</sub> last week
         </div>
 
         <div id="accordion">
@@ -47,9 +47,7 @@
           </div>
         </div>
     </div>
-    <div class="col-lg-4 col-m-6" style="margin-top: 50px;padding-left: 7%;padding-right: 7%">
-        {% block right_side %}{% endblock %}
-    </div>
+    {% block right_side %}{% endblock %}
     <div class="col-lg-2">
     </div>
 </div>

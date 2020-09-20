@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 """User forms."""
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField
+from wtforms import PasswordField, StringField, SelectField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
-
+import csv
 from .models import User
 
+with open("co2data/co2clean.csv") as csvfile:
+    reader = csv.reader(csvfile)
+    countries = [rows[0] for rows in reader]
+    countries.sort()
 
 class RegisterForm(FlaskForm):
     """Register form."""
@@ -13,7 +17,9 @@ class RegisterForm(FlaskForm):
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=3, max=25)]
     )
-    country = StringField("Country", validators=[DataRequired()])
+    country = SelectField(
+        "Country", validators=[DataRequired()], choices=[(c, c) for c in countries]
+    )
     email = StringField(
         "Email", validators=[DataRequired(), Email(), Length(min=6, max=40)]
     )
