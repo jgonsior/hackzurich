@@ -9,7 +9,7 @@ from .models import User
 with open("co2data/co2clean.csv") as csvfile:
     reader = csv.reader(csvfile)
     countries = [rows[0] for rows in reader]
-
+    countries.sort()
 
 class RegisterForm(FlaskForm):
     """Register form."""
