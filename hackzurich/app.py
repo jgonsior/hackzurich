@@ -105,14 +105,14 @@ def create_dummy_data():
     challenge = Challenge(
         challengename="The cold and amazing shower!",
         description="""
-Thousands of people from all over the world already shower cold. Not only will you save energy, CO2 and water but there are also many positive effects on your health connected with showering cold.  Scientists found out, that cold showers do not only relief stress and prevents depressions, but also help to develop a more robust immune response.
+Thousands of people from all over the world already shower cold. Not only will you save energy, CO<sub>2</sub> and water but there are also many positive effects on your health connected with showering cold.  Scientists found out, that cold showers do not only relief stress and prevents depressions, but also help to develop a more robust immune response.
 Find out more:
 https://www.wimhofmethod.com/benefits-of-cold-showers
 https://www.healthline.com/health/cold-shower-benefits#improved-metabolism
 
 
 You will save:
-0.5kg of CO2 per shower (based on gas boilers)
+0.5kg of CO<sub>2</sub> per shower (based on gas boilers)
 Equiv. 3.3 km with an average car
 
 Company supporting you:
@@ -194,7 +194,7 @@ Equiv. 66km with an average car
     challenge3 = Challenge(
         challengename="Lower your thermostat by 1° C",
         description="""
-Average Swiss household (44m^2 per person): 0.4 kg of CO2 per heating day
+Average Swiss household (44m^2 per person): 0.4 kg of CO<sub>2</sub> per heating day
 
 Company supporting you: SmartSolation
 10 kg of Carbon offset
@@ -220,8 +220,8 @@ Company supporting you: SmartSolation
 Wash a load of laundry washed and dry it on a clothesline.
 Find out more: https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl
 
-CO2 savings:
-1.8 kg of CO2
+CO<sub>2</sub> savings:
+1.8 kg of CO<sub>2</sub>
         """,
         active=True,
         co2offset=0.018,
@@ -229,7 +229,54 @@ CO2 savings:
         company_id=company3.id,
         chat_room=chat_room,
     )
-    db.session.add(challenge3)
+    db.session.add(challenge4)
+
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
+
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="Love your clothesline!"
+    )
+    challenge4 = Challenge(
+        challengename="Love your clothesline!",
+        description="""
+Wash a load of laundry washed and dry it on a clothesline.
+Find out more: <br><a href="https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl">https://www.theguardian.com/environment/ethicallivingblog/2008/may/02/treadlightlyswitchofftumbl</a>
+
+CO<sub>2</sub> savings:
+1.8 kg of CO<sub>2</sub>
+        """,
+        active=True,
+        co2offset=0.018,
+        category_id=category5.id,
+        company_id=company3.id,
+        chat_room=chat_room,
+    )
+    db.session.add(challenge4)
+
+    chat_message = ChatMessage.create(
+        user=admin, text="Welcome to the challenge!", room=chat_room
+    )
+
+    chat_room = ChatRoom.create(
+        name="Ein schoener Raum", room_id="Food For Thought!"
+    )
+    challenge5 = Challenge(
+        challengename="Food For Thought!",
+        description="""
+Thanks to the magic of data we have found a large number of sustainable recipes.
+These were picked thanks their low CO<sub>2</sub> emissions per serving.
+Today we suggest you cook:<br><br>
+
+        """,
+        active=True,
+        co2offset=0.018,
+        category_id=category1.id,
+        company_id=company3.id,
+        chat_room=chat_room,
+    )
+    db.session.add(challenge5)
 
     chat_message = ChatMessage.create(
         user=admin, text="Welcome to the challenge!", room=chat_room
